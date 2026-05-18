@@ -48,7 +48,7 @@
       }
     },
     {
-      "data": { "url": "data/city_temperature.csv" },
+      "data": { "url": "city_temperature.csv" },
       "mark": { "type": "text", "dy": -18, "fontSize": 11, "fontWeight": "bold", "fill": "#333" },
       "encoding": {
         "longitude": { "field": "longitude", "type": "quantitative" },
