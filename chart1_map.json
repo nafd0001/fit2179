@@ -1,0 +1,60 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": {
+    "text": "Average Annual Rainfall by Location",
+    "fontSize": 16,
+    "font": "Georgia",
+    "anchor": "start"
+  },
+  "width": 700,
+  "height": 480,
+  "projection": { "type": "mercator" },
+  "layer": [
+    {
+      "data": {
+        "url": "https://raw.githubusercontent.com/rowanhogan/australian-states/master/states.geojson",
+        "format": { "type": "json" }
+      },
+      "mark": {
+        "type": "geoshape",
+        "fill": "#dce9d5",
+        "stroke": "#aac4a0",
+        "strokeWidth": 1
+      }
+    },
+    {
+      "data": { "url": "data/city_rainfall.csv" },
+      "mark": { "type": "circle", "opacity": 0.85, "stroke": "#fff", "strokeWidth": 1.5 },
+      "encoding": {
+        "longitude": { "field": "longitude", "type": "quantitative" },
+        "latitude": { "field": "latitude", "type": "quantitative" },
+        "size": {
+          "field": "avg_rainfall_mm",
+          "type": "quantitative",
+          "title": "Avg Rainfall (mm)",
+          "scale": { "range": [100, 2000] }
+        },
+        "color": {
+          "field": "avg_rainfall_mm",
+          "type": "quantitative",
+          "scale": { "scheme": "blues", "domain": [500, 2000] },
+          "title": "Avg Rainfall (mm)"
+        },
+        "tooltip": [
+          { "field": "city", "type": "nominal", "title": "City" },
+          { "field": "state", "type": "nominal", "title": "State" },
+          { "field": "avg_rainfall_mm", "type": "quantitative", "title": "Avg Rainfall (mm)", "format": ".0f" }
+        ]
+      }
+    },
+    {
+      "data": { "url": "data/city_rainfall.csv" },
+      "mark": { "type": "text", "dy": -18, "fontSize": 11, "fontWeight": "bold", "fill": "#333" },
+      "encoding": {
+        "longitude": { "field": "longitude", "type": "quantitative" },
+        "latitude": { "field": "latitude", "type": "quantitative" },
+        "text": { "field": "city", "type": "nominal" }
+      }
+    }
+  ]
+}

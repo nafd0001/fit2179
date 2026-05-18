@@ -1,0 +1,60 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": {
+    "text": "Average Annual Temperature by Location",
+    "fontSize": 16,
+    "font": "Georgia",
+    "anchor": "start"
+  },
+  "width": 700,
+  "height": 480,
+  "projection": { "type": "mercator" },
+  "layer": [
+    {
+      "data": {
+        "url": "https://raw.githubusercontent.com/rowanhogan/australian-states/master/states.geojson",
+        "format": { "type": "json" }
+      },
+      "mark": {
+        "type": "geoshape",
+        "fill": "#f5ede0",
+        "stroke": "#d4b896",
+        "strokeWidth": 1
+      }
+    },
+    {
+      "data": { "url": "data/city_temperature.csv" },
+      "mark": { "type": "circle", "opacity": 0.85, "stroke": "#fff", "strokeWidth": 1.5 },
+      "encoding": {
+        "longitude": { "field": "longitude", "type": "quantitative" },
+        "latitude": { "field": "latitude", "type": "quantitative" },
+        "size": {
+          "field": "avg_temp_c",
+          "type": "quantitative",
+          "title": "Avg Temp (°C)",
+          "scale": { "range": [100, 2000] }
+        },
+        "color": {
+          "field": "avg_temp_c",
+          "type": "quantitative",
+          "scale": { "scheme": "orangered", "domain": [12, 28] },
+          "title": "Avg Temp (°C)"
+        },
+        "tooltip": [
+          { "field": "city", "type": "nominal", "title": "City" },
+          { "field": "state", "type": "nominal", "title": "State" },
+          { "field": "avg_temp_c", "type": "quantitative", "title": "Avg Temp (°C)", "format": ".1f" }
+        ]
+      }
+    },
+    {
+      "data": { "url": "data/city_temperature.csv" },
+      "mark": { "type": "text", "dy": -18, "fontSize": 11, "fontWeight": "bold", "fill": "#333" },
+      "encoding": {
+        "longitude": { "field": "longitude", "type": "quantitative" },
+        "latitude": { "field": "latitude", "type": "quantitative" },
+        "text": { "field": "city", "type": "nominal" }
+      }
+    }
+  ]
+}
