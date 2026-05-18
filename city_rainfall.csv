@@ -1,0 +1,11 @@
+city,latitude,longitude,avg_rainfall_mm,state
+Sydney,-33.87,151.21,1217,NSW
+Melbourne,-37.81,144.96,648,VIC
+Brisbane,-27.47,153.02,1011,QLD
+Perth,-31.95,115.86,869,WA
+Adelaide,-34.93,138.60,551,SA
+Darwin,-12.46,130.84,1727,NT
+Hobart,-42.88,147.33,619,TAS
+Canberra,-35.28,149.13,617,ACT
+Cairns,-16.92,145.77,1993,QLD
+Townsville,-19.26,146.82,1143,QLD
