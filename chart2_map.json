@@ -23,7 +23,7 @@
       }
     },
     {
-      "data": { "url": "data/city_temperature.csv" },
+      "data": { "url": "city_temperature.csv" },
       "mark": { "type": "circle", "opacity": 0.85, "stroke": "#fff", "strokeWidth": 1.5 },
       "encoding": {
         "longitude": { "field": "longitude", "type": "quantitative" },
