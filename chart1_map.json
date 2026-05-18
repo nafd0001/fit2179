@@ -23,7 +23,7 @@
       }
     },
     {
-      "data": { "url": "data/city_rainfall.csv" },
+      "data": { "url": "city_rainfall.csv" },
       "mark": { "type": "circle", "opacity": 0.85, "stroke": "#fff", "strokeWidth": 1.5 },
       "encoding": {
         "longitude": { "field": "longitude", "type": "quantitative" },
