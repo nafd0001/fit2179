@@ -56,6 +56,5 @@
         "text": { "field": "city", "type": "nominal" }
       }
     }
-    }
   ]
 }
