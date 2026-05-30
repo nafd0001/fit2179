@@ -920,11 +920,13 @@ states.forEach(function (s) {
             'x': {
               'field': 'avg_temp', 'type': 'quantitative',
               'title': 'Average Temperature (°C)',
+              'scale': { 'padding': 30 },
               'axis': { 'labelExpr': "datum.value + '°C'" }
             },
             'y': {
               'field': 'avg_humidity', 'type': 'quantitative',
               'title': 'Average Humidity (%)',
+              'scale': { 'padding': 30 },
               'axis': { 'labelExpr': "datum.value + '%'" }
             },
             'size': {
@@ -950,7 +952,7 @@ states.forEach(function (s) {
           }
         },
         {
-          'mark': { 'type': 'text', 'dy': -10, 'fontSize': 9, 'fontWeight': 600 },
+          'mark': { 'type': 'text', 'dy': -14, 'fontSize': 9, 'fontWeight': 600 },,
           'encoding': {
             'x': { 'field': 'avg_temp',     'type': 'quantitative' },
             'y': { 'field': 'avg_humidity', 'type': 'quantitative' },
@@ -1094,7 +1096,11 @@ states.forEach(function (s) {
                 'domain': cityList,
                 'range': cityList.map(function(c) { return cityColors[c]; })
               },
-              'legend': null
+              'legend': {
+  'orient': 'bottom',
+  'title': 'City',
+  'columns': 6
+}
             },
             'tooltip': [
               { 'field': 'City',            'type': 'nominal',      'title': 'City' },
