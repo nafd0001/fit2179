@@ -751,19 +751,28 @@ document.addEventListener('DOMContentLoaded', async function () {
   (function buildDropdown7() {
     var container = document.getElementById('dropdown-container-7');
     if (!container) return;
-    var states = ['All', 'New South Wales', 'Victoria', 'Queensland', 'Western Australia', 'South Australia', 'Tasmania', 'Northern Territory'];
-    var label = document.createElement('label');
-    label.className = 'dropdown-label';
-    label.textContent = 'State';
-    var select = document.createElement('select');
-    select.id = 'dropdown-7';
-    select.className = 'chart-dropdown';
-    states.forEach(function (s) {
-      var opt = document.createElement('option');
-      opt.value = s;
-      var stateNames = {'All':'All States','NSW':'New South Wales','VIC':'Victoria','QLD':'Queensland','WA':'Western Australia','SA':'South Australia','TAS':'Tasmania','NT':'Northern Territory'}; opt.textContent = stateNames[s] || s;
-      select.appendChild(opt);
-    });
+    var states = [
+  { value: 'All', label: 'All States' },
+  { value: 'NSW', label: 'New South Wales' },
+  { value: 'VIC', label: 'Victoria' },
+  { value: 'QLD', label: 'Queensland' },
+  { value: 'WA',  label: 'Western Australia' },
+  { value: 'SA',  label: 'South Australia' },
+  { value: 'TAS', label: 'Tasmania' },
+  { value: 'NT',  label: 'Northern Territory' }
+];
+var label = document.createElement('label');
+label.className = 'dropdown-label';
+label.textContent = 'State';
+var select = document.createElement('select');
+select.id = 'dropdown-7';
+select.className = 'chart-dropdown';
+states.forEach(function (s) {
+  var opt = document.createElement('option');
+  opt.value = s.value;
+  opt.textContent = s.label;
+  select.appendChild(opt);
+});
     select.addEventListener('change', function () { renderChart7(this.value); });
     container.appendChild(label);
     container.appendChild(select);
