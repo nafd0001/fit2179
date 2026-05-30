@@ -394,7 +394,9 @@ document.addEventListener('DOMContentLoaded', async function () {
 
   var activeState7 = 'All';
   function makeSpec7(state) {
-    var transform = state === 'All' ? [] : [{ 'filter': 'datum.State === "' + state + '"' }];
+    var stateAbbr = { 'All': 'All', 'New South Wales': 'NSW', 'Victoria': 'VIC', 'Queensland': 'QLD', 'Western Australia': 'WA', 'South Australia': 'SA', 'Tasmania': 'TAS', 'Northern Territory': 'NT' };
+    var abbr = stateAbbr[state] || state;
+    var transform = abbr === 'All' ? [] : [{ 'filter': 'datum.State === "' + abbr + '"' }];
     return {
       '$schema': 'https://vega.github.io/schema/vega-lite/v5.json',
       'width': 'container', 'height': { 'step': 22 },
@@ -516,19 +518,51 @@ document.addEventListener('DOMContentLoaded', async function () {
 
   /* CHART 9 - Temperature vs Humidity */
   var activeMode9 = 'overview';
+
+  var cityLabelOffsets = {
+    'Sydney':        { dx:  8,  dy: -8  },
+    'Melbourne':     { dx: -10, dy: -12 },
+    'Brisbane':      { dx:  8,  dy: -8  },
+    'Perth':         { dx:  8,  dy:  8  },
+    'Adelaide':      { dx:  8,  dy:  8  },
+    'Hobart':        { dx: -10, dy: -8  },
+    'Darwin':        { dx:  8,  dy: -8  },
+    'Cairns':        { dx:  8,  dy: -10 },
+    'Canberra':      { dx: -12, dy: -8  },
+    'Townsville':    { dx:  8,  dy: -8  },
+    'Alice Springs': { dx:  8,  dy: -10 },
+    'Woomera':       { dx:  8,  dy: -10 }
+  };
+
   function makeSpec9overview() {
+    var cityScatterData = [
+      { City: 'Sydney',        avg_temp: 18.9, avg_humidity: 61.5, annual_rainfall: 1213, labelDx:  8,  labelDy: -8  },
+      { City: 'Melbourne',     avg_temp: 16.3, avg_humidity: 59.4, annual_rainfall:  683, labelDx: -50, labelDy: -8  },
+      { City: 'Brisbane',      avg_temp: 21.4, avg_humidity: 59.0, annual_rainfall: 1148, labelDx:  8,  labelDy: -8  },
+      { City: 'Perth',         avg_temp: 19.0, avg_humidity: 54.8, annual_rainfall:  696, labelDx:  8,  labelDy:  12 },
+      { City: 'Adelaide',      avg_temp: 17.7, avg_humidity: 52.3, annual_rainfall:  572, labelDx:  8,  labelDy:  12 },
+      { City: 'Hobart',        avg_temp: 13.5, avg_humidity: 59.3, annual_rainfall:  585, labelDx: -36, labelDy: -8  },
+      { City: 'Darwin',        avg_temp: 27.9, avg_humidity: 60.2, annual_rainfall: 1859, labelDx:  8,  labelDy: -8  },
+      { City: 'Cairns',        avg_temp: 25.4, avg_humidity: 65.8, annual_rainfall: 2096, labelDx:  8,  labelDy: -10 },
+      { City: 'Canberra',      avg_temp: 13.9, avg_humidity: 59.6, annual_rainfall:  636, labelDx: -44, labelDy:  8  },
+      { City: 'Townsville',    avg_temp: 24.9, avg_humidity: 60.7, annual_rainfall: 1272, labelDx:  8,  labelDy:  10 },
+      { City: 'Alice Springs', avg_temp: 21.2, avg_humidity: 31.9, annual_rainfall:  322, labelDx:  8,  labelDy: -10 },
+      { City: 'Woomera',       avg_temp: 20.0, avg_humidity: 40.8, annual_rainfall:  179, labelDx:  8,  labelDy: -10 }
+    ];
+    cityScatterData.forEach(function(d) { d.fillColor = cityColors[d.City] || '#999'; });
+
     return {
       '$schema': 'https://vega.github.io/schema/vega-lite/v5.json',
-      'width': 'container', 'height': 340,
-      'data': { 'url': 'city_scatter.csv' },
+      'width': 'container', 'height': 380,
+      'data': { 'values': cityScatterData },
       'layer': [
         {
-          'mark': { 'type': 'point', 'filled': true, 'size': 120, 'opacity': 0.85 },
+          'mark': { 'type': 'point', 'filled': true, 'opacity': 0.85 },
           'encoding': {
-            'x': { 'field': 'avg_temp', 'type': 'quantitative', 'title': 'Average Temperature (C)', 'scale': { 'padding': 30 }, 'axis': { 'labelExpr': "datum.value + 'C'" } },
-            'y': { 'field': 'avg_humidity', 'type': 'quantitative', 'title': 'Average Humidity (%)', 'scale': { 'padding': 30 }, 'axis': { 'labelExpr': "datum.value + '%'" } },
+            'x': { 'field': 'avg_temp', 'type': 'quantitative', 'title': 'Average Temperature (C)', 'scale': { 'padding': 40 }, 'axis': { 'labelExpr': "datum.value + 'C'" } },
+            'y': { 'field': 'avg_humidity', 'type': 'quantitative', 'title': 'Average Humidity (%)', 'scale': { 'padding': 40 }, 'axis': { 'labelExpr': "datum.value + '%'" } },
             'size': { 'field': 'annual_rainfall', 'type': 'quantitative', 'title': 'Estimated Annual Rainfall (mm)', 'scale': { 'range': [60, 600] }, 'legend': { 'orient': 'bottom', 'title': 'Estimated Annual Rainfall (mm)' } },
-            'color': { 'field': 'City', 'type': 'nominal', 'scale': { 'domain': cityList, 'range': cityList.map(function(c) { return cityColors[c]; }) }, 'legend': null },
+            'fill': { 'field': 'fillColor', 'type': 'nominal', 'scale': null, 'legend': null },
             'tooltip': [
               { 'field': 'City',            'type': 'nominal',      'title': 'City' },
               { 'field': 'avg_temp',        'type': 'quantitative', 'title': 'Average Temperature (C)', 'format': '.1f' },
@@ -538,11 +572,13 @@ document.addEventListener('DOMContentLoaded', async function () {
           }
         },
         {
-          'mark': { 'type': 'text', 'dy': -14, 'fontSize': 9, 'fontWeight': 600 },
+          'mark': { 'type': 'text', 'fontSize': 9, 'fontWeight': 600 },
           'encoding': {
             'x': { 'field': 'avg_temp',     'type': 'quantitative' },
             'y': { 'field': 'avg_humidity', 'type': 'quantitative' },
             'text': { 'field': 'City', 'type': 'nominal' },
+            'dx': { 'field': 'labelDx', 'type': 'quantitative', 'scale': null },
+            'dy': { 'field': 'labelDy', 'type': 'quantitative', 'scale': null },
             'color': { 'value': '#1e293b' }
           }
         },
