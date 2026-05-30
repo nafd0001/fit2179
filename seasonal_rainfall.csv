@@ -1,0 +1,49 @@
+City,Season,Rainfall
+Adelaide,Autumn,1.61
+Adelaide,Spring,1.14
+Adelaide,Summer,0.98
+Adelaide,Winter,2.5
+Alice Springs,Autumn,0.68
+Alice Springs,Spring,0.53
+Alice Springs,Summer,1.97
+Alice Springs,Winter,0.36
+Brisbane,Autumn,3.49
+Brisbane,Spring,2.36
+Brisbane,Summer,5.35
+Brisbane,Winter,1.6
+Cairns,Autumn,6.88
+Cairns,Spring,2.66
+Cairns,Summer,12.15
+Cairns,Winter,1.18
+Canberra,Autumn,1.35
+Canberra,Spring,1.95
+Canberra,Summer,2.25
+Canberra,Winter,1.44
+Darwin,Autumn,4.3
+Darwin,Spring,2.83
+Darwin,Summer,13.95
+Darwin,Winter,0.0
+Hobart,Autumn,1.27
+Hobart,Spring,1.92
+Hobart,Summer,1.36
+Hobart,Winter,1.83
+Melbourne,Autumn,1.7
+Melbourne,Spring,2.25
+Melbourne,Summer,1.69
+Melbourne,Winter,1.79
+Perth,Autumn,1.6
+Perth,Spring,1.57
+Perth,Summer,0.61
+Perth,Winter,3.73
+Sydney,Autumn,3.99
+Sydney,Spring,2.29
+Sydney,Summer,3.28
+Sydney,Winter,3.65
+Townsville,Autumn,4.0
+Townsville,Spring,0.88
+Townsville,Summer,8.34
+Townsville,Winter,0.66
+Woomera,Autumn,0.52
+Woomera,Spring,0.4
+Woomera,Summer,0.62
+Woomera,Winter,0.42
