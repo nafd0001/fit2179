@@ -111,7 +111,7 @@ document.addEventListener('DOMContentLoaded', async function () {
     'layer': [
       {
         'data': {
-          'url': 'data/australian-states.json',
+          'url': 'australian-states.json',
           'format': { 'type': 'json', 'property': 'features' }
         },
         'mark': {
@@ -195,7 +195,7 @@ document.addEventListener('DOMContentLoaded', async function () {
     'layer': [
       {
         'data': {
-          'url': 'data/australian-states.json',
+          'url': 'australian-states.json',
           'format': { 'type': 'json', 'property': 'features' }
         },
         'mark': {
@@ -207,7 +207,7 @@ document.addEventListener('DOMContentLoaded', async function () {
         }
       },
       {
-        'data': { 'url': 'data/temp_by_location.csv' },
+        'data': { 'url': 'temp_by_location.csv' },
         'mark': {
           'type': 'point',
           'shape': 'circle',
@@ -238,7 +238,7 @@ document.addEventListener('DOMContentLoaded', async function () {
         }
       },
       {
-        'data': { 'url': 'data/temp_by_location.csv' },
+        'data': { 'url': 'temp_by_location.csv' },
         'mark': {
           'type': 'text',
           'dy': -12,
@@ -337,7 +337,7 @@ document.addEventListener('DOMContentLoaded', async function () {
       '$schema': 'https://vega.github.io/schema/vega-lite/v5.json',
       'width': 'container',
       'height': 340,
-      'data': { 'url': 'data/monthly_climate.csv' },
+      'data': { 'url': 'monthly_climate.csv' },
       'transform': [{ 'filter': filterExpr }],
       'mark': {
         'type': 'line',
@@ -406,7 +406,7 @@ document.addEventListener('DOMContentLoaded', async function () {
       '$schema': 'https://vega.github.io/schema/vega-lite/v5.json',
       'width': 'container',
       'height': 340,
-      'data': { 'url': 'data/monthly_climate.csv' },
+      'data': { 'url': 'monthly_climate.csv' },
       'transform': [{ 'filter': filterExpr }],
       'mark': {
         'type': 'area',
@@ -475,7 +475,7 @@ document.addEventListener('DOMContentLoaded', async function () {
       '$schema': 'https://vega.github.io/schema/vega-lite/v5.json',
       'width': 'container',
       'height': 320,
-      'data': { 'url': 'data/monthly_seasonality.csv' },
+      'data': { 'url': 'monthly_seasonality.csv' },
       'transform': [{ 'filter': filterExpr }],
       'layer': [
         {
@@ -597,7 +597,7 @@ document.addEventListener('DOMContentLoaded', async function () {
       '$schema': 'https://vega.github.io/schema/vega-lite/v5.json',
       'width': 'container',
       'height': 320,
-      'data': { 'url': 'data/monthly_seasonality.csv' },
+      'data': { 'url': 'monthly_seasonality.csv' },
       'transform': [
         { 'filter': filterExpr },
         {
@@ -704,7 +704,7 @@ document.addEventListener('DOMContentLoaded', async function () {
       '$schema': 'https://vega.github.io/schema/vega-lite/v5.json',
       'width': 'container',
       'height': { 'step': 22 },
-      'data': { 'url': 'data/city_stats.csv' },
+      'data': { 'url': 'city_stats.csv' },
       'transform': transform.concat([
         { 'sort': [{ 'field': 'annual_rainfall', 'order': 'descending' }], 'window': [{ 'op': 'rank', 'as': 'rank' }] }
       ]),
@@ -787,7 +787,7 @@ document.addEventListener('DOMContentLoaded', async function () {
       '$schema': 'https://vega.github.io/schema/vega-lite/v5.json',
       'width': 'container',
       'height': { 'step': 28 },
-      'data': { 'url': 'data/city_stats.csv' },
+      'data': { 'url': 'city_stats.csv' },
       'transform': [
         { 'filter': 'datum.City !== "Mount Ginini"' },
         { 'window': [{ 'op': 'rank', 'as': 'rank' }], 'sort': [{ 'field': metric, 'order': 'descending' }] },
@@ -903,7 +903,7 @@ document.addEventListener('DOMContentLoaded', async function () {
       '$schema': 'https://vega.github.io/schema/vega-lite/v5.json',
       'width': 'container',
       'height': 340,
-      'data': { 'url': 'data/city_scatter.csv' },
+      'data': { 'url': 'city_scatter.csv' },
       'layer': [
         {
           'mark': { 'type': 'point', 'filled': true, 'size': 120, 'opacity': 0.85 },
@@ -967,7 +967,7 @@ document.addEventListener('DOMContentLoaded', async function () {
     var filterExpr = cities.map(function(c) { return 'datum.City === "' + c + '"'; }).join(' || ');
     return {
       '$schema': 'https://vega.github.io/schema/vega-lite/v5.json',
-      'data': { 'url': 'data/monthly_scatter.csv' },
+      'data': { 'url': 'monthly_scatter.csv' },
       'transform': [{ 'filter': filterExpr }],
       'facet': {
         'field': 'City', 'type': 'nominal',
@@ -1064,7 +1064,7 @@ document.addEventListener('DOMContentLoaded', async function () {
       '$schema': 'https://vega.github.io/schema/vega-lite/v5.json',
       'width': 'container',
       'height': 340,
-      'data': { 'url': 'data/city_scatter.csv' },
+      'data': { 'url': 'city_scatter.csv' },
       'layer': [
         {
           'mark': { 'type': 'point', 'filled': true, 'size': 120, 'opacity': 0.85 },
@@ -1121,7 +1121,7 @@ document.addEventListener('DOMContentLoaded', async function () {
     var filterExpr = cities.map(function(c) { return 'datum.City === "' + c + '"'; }).join(' || ');
     return {
       '$schema': 'https://vega.github.io/schema/vega-lite/v5.json',
-      'data': { 'url': 'data/monthly_scatter.csv' },
+      'data': { 'url': 'monthly_scatter.csv' },
       'transform': [{ 'filter': filterExpr }],
       'facet': {
         'field': 'City', 'type': 'nominal',
