@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Weather Patterns and Climate Variability Across Australia</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+
+  <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
+</head>
+<body>
+
+  <header class="hero">
+    <div class="hero-bg-grid"></div>
+    <div class="hero-inner">
+      <span class="hero-tag">Climate Data Visualisation</span>
+      <h1 class="hero-title">
+        Weather Patterns &amp;<br />
+        <em>Climate Variability</em><br />
+        Across Australia
+      </h1>
+      <p class="hero-sub">
+        An interactive exploration of temperature, rainfall, humidity, and wind patterns
+        across 12 major Australian cities. Data sourced from Bureau of Meteorology averages.
+      </p>
+
+      <div class="kpi-strip">
+        <div class="kpi-card">
+          <span class="kpi-icon">&#127777;&#65039;</span>
+          <div>
+            <strong class="kpi-val">24.9&#176;C</strong>
+            <span class="kpi-label">Average Temperature</span>
+          </div>
+        </div>
+        <div class="kpi-card">
+          <span class="kpi-icon">&#127783;&#65039;</span>
+          <div>
+            <strong class="kpi-val">955 mm</strong>
+            <span class="kpi-label">Average Rainfall</span>
+          </div>
+        </div>
+        <div class="kpi-card">
+          <span class="kpi-icon">&#128167;</span>
+          <div>
+            <strong class="kpi-val">56%</strong>
+            <span class="kpi-label">Average Humidity</span>
+          </div>
+        </div>
+        <div class="kpi-card">
+          <span class="kpi-icon">&#128168;</span>
+          <div>
+            <strong class="kpi-val">16 km/h</strong>
+            <span class="kpi-label">Average Wind Speed</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="section-divider">
+    <span>Geographic Patterns</span>
+  </div>
+
+  <section class="grid grid-2">
+    <div class="chart-card" id="card-1">
+      <div class="chart-card-header">
+        <div class="chart-num">01</div>
+        <div>
+          <h2 class="chart-title">Rainfall by Location</h2>
+          <p class="chart-desc">
+            This choropleth-style map visualises annual rainfall totals across Australian cities.
+            Colour encodes rainfall intensity, with darker blue circles indicating wetter regions.
+            Tropical northern cities like Darwin and Cairns receive over 1,700 mm annually, while arid inland
+            Alice Springs averages just 276 mm, highlighting Australia's dramatic precipitation gradient from
+            coast to interior.
+          </p>
+        </div>
+      </div>
+      <div id="vis1" class="vega-chart"></div>
+      <div class="chart-legend" id="legend-1">
+        <span style="font-size:11px;font-weight:600;color:#475569;margin-right:6px;text-transform:uppercase;letter-spacing:0.05em;">Estimated Annual Rainfall:</span>
+        <span class="legend-dot" style="background:#c6dbef"></span>Less than 400 mm
+        <span class="legend-dot" style="background:#9ecae1"></span>400-700 mm
+        <span class="legend-dot" style="background:#6baed6"></span>700-1,000 mm
+        <span class="legend-dot" style="background:#3182bd"></span>1,000-1,500 mm
+        <span class="legend-dot" style="background:#08519c"></span>1,500-2,000 mm
+        <span class="legend-dot" style="background:#08306b"></span>More than 2,000 mm
+      </div>
+    </div>
+
+    <div class="chart-card" id="card-2">
+      <div class="chart-card-header">
+        <div class="chart-num">02</div>
+        <div>
+          <h2 class="chart-title">Temperature by Location</h2>
+          <p class="chart-desc">
+            Average annual temperatures are mapped across Australia using colour-coded markers.
+            The gradient ranges from cool blue (Hobart at 16.7&#176;C) through warm amber to hot red
+            (Darwin at 31.8&#176;C). This spatial view reveals the strong latitude-temperature relationship,
+            with northern tropical cities consistently warmer and southern coastal cities experiencing
+            more moderate temperatures.
+          </p>
+        </div>
+      </div>
+      <div id="vis2" class="vega-chart"></div>
+      <div class="chart-legend" id="legend-2">
+        <span class="legend-dot" style="background:#74add1"></span>Less than 18°C
+        <span class="legend-dot" style="background:#abd9e9"></span>18-22&#176;C
+        <span class="legend-dot" style="background:#fee090"></span>22-26&#176;C
+        <span class="legend-dot" style="background:#f46d43"></span>26-30&#176;C
+        <span class="legend-dot" style="background:#d73027"></span>More than 30°C
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider">
+    <span>Trends Over Time</span>
+  </div>
+
+  <section class="grid grid-1">
+    <div class="chart-card" id="card-3">
+      <div class="chart-card-header">
+        <div class="chart-num">03</div>
+        <div>
+          <h2 class="chart-title">Temperature Over Time</h2>
+          <p class="chart-desc">
+            This multi-line time series chart tracks temperature trends from 2008 to 2017 across selected cities.
+            The chart reveals consistent seasonal oscillations across all locations, with Darwin maintaining
+            near-constant warmth year-round while southern cities like Hobart and Melbourne show the widest
+            seasonal swings, which is evidence of Australia's diverse climate zones.
+          </p>
+        </div>
+      </div>
+      <div class="pill-toggle" id="pills-3"></div>
+      <div id="vis3" class="vega-chart vega-chart--wide"></div>
+      <div class="chart-legend bottom-legend" id="bottom-legend-3"></div>
+    </div>
+  </section>
+
+  <section class="grid grid-1">
+    <div class="chart-card" id="card-4">
+      <div class="chart-card-header">
+        <div class="chart-num">04</div>
+        <div>
+          <h2 class="chart-title">Rainfall Over Time</h2>
+          <p class="chart-desc">
+            Stacked area visualisation showing rainfall trends over a multi-year period. The filled areas make
+            it easy to compare cumulative rainfall across cities and spot anomalous wet or dry periods. Darwin's
+            dramatic wet-season peaks dominate the chart, while Perth's winter-dominant rainfall pattern creates
+            an inverse profile, underscoring Australia's varied precipitation regimes.
+          </p>
+        </div>
+      </div>
+      <div class="pill-toggle" id="pills-4"></div>
+      <div id="vis4" class="vega-chart vega-chart--wide"></div>
+      <div class="chart-legend bottom-legend" id="bottom-legend-4"></div>
+    </div>
+  </section>
+
+  <div class="section-divider">
+    <span>Seasonality</span>
+  </div>
+
+  <section class="grid grid-2">
+    <div class="chart-card" id="card-5">
+      <div class="chart-card-header">
+        <div class="chart-num">05</div>
+        <div>
+          <h2 class="chart-title">Month vs Temperature (Seasonality)</h2>
+          <p class="chart-desc">
+            Monthly average temperatures reveal the seasonal rhythm of each city. Southern hemisphere
+            seasonality is clearly visible, with peak temperatures in January/February and troughs in July.
+            Darwin's nearly flat line contrasts sharply with Melbourne's wide arc, demonstrating that
+            proximity to the equator dampens seasonal temperature variation.
+          </p>
+        </div>
+      </div>
+      <div class="pill-toggle" id="pills-5"></div>
+      <div id="vis5" class="vega-chart"></div>
+      <div class="chart-legend bottom-legend" id="bottom-legend-5"></div>
+    </div>
+
+    <div class="chart-card" id="card-6">
+      <div class="chart-card-header">
+        <div class="chart-num">06</div>
+        <div>
+          <h2 class="chart-title">Month vs Rainfall</h2>
+          <p class="chart-desc">
+            Grouped bar charts display monthly rainfall patterns, revealing each city's precipitation
+            seasonality. Darwin shows an extreme monsoon pattern with over 400 mm in January and
+            near-zero in the dry season. Perth exhibits the opposite, a Mediterranean climate with
+            wet winters and dry summers. This contrast in rainfall timing has profound implications
+            for water management across Australia.
+          </p>
+        </div>
+      </div>
+      <div class="pill-toggle" id="pills-6"></div>
+      <div id="vis6" class="vega-chart"></div>
+      <div class="chart-legend bottom-legend" id="bottom-legend-6"></div>
+    </div>
+  </section>
+
+  <div class="section-divider">
+    <span>City Rankings</span>
+  </div>
+
+  <section class="grid grid-2">
+    <div class="chart-card" id="card-7">
+      <div class="chart-card-header">
+        <div class="chart-num">07</div>
+        <div>
+          <h2 class="chart-title">Average Rainfall by City</h2>
+          <p class="chart-desc">
+            A horizontal bar chart ranking all cities by their total annual rainfall. Cairns leads
+            at over 2,000 mm, receiving nearly eight times more rain than Alice Springs. The ranking
+            clearly separates tropical coastal cities (Cairns, Darwin, Townsville) from arid interior
+            locations, with temperate southern cities clustering in the 500-1,200 mm range.
+          </p>
+        </div>
+      </div>
+      <div class="dropdown-container" id="dropdown-container-7"></div>
+      <div id="vis7" class="vega-chart"></div>
+    </div>
+
+    <div class="chart-card" id="card-8">
+      <div class="chart-card-header">
+        <div class="chart-num">08</div>
+        <div>
+          <h2 class="chart-title">Hottest Cities</h2>
+          <p class="chart-desc">
+            A ranked bar visualisation of average annual temperatures across Australian cities.
+            Alice Springs, Darwin, and Broome consistently top the chart above 30&#176;C, while Hobart at
+            16.7&#176;C is the coolest. The proportional bar lengths make it intuitive to gauge relative
+            differences across the country.
+          </p>
+        </div>
+      </div>
+      <div class="dropdown-container" id="dropdown-container-8"></div>
+      <div id="vis8" class="vega-chart"></div>
+    </div>
+  </section>
+
+  <div class="section-divider">
+    <span>Relationships and Distributions</span>
+  </div>
+
+  <section class="grid grid-2">
+    <div class="chart-card" id="card-9">
+      <div class="chart-card-header">
+        <div class="chart-num">09</div>
+        <div>
+          <h2 class="chart-title">Temperature vs Humidity</h2>
+          <p class="chart-desc">
+            This scatter plot explores the relationship between annual temperature and humidity across
+            cities. Bubble size encodes annual rainfall. Cairns and Darwin appear in the upper-right,
+            hot and humid, while Alice Springs sits low on humidity despite high temperatures,
+            characteristic of its desert climate. The visualisation reveals that humidity is not simply
+            a function of temperature but depends on proximity to moisture sources.
+          </p>
+        </div>
+      </div>
+      <div class="dropdown-container" id="dropdown-container-9"></div>
+      <div id="vis9" class="vega-chart"></div>
+    </div>
+
+    <div class="chart-card" id="card-10">
+      <div class="chart-card-header">
+        <div class="chart-num">10</div>
+        <div>
+          <h2 class="chart-title">Wind Speed vs Rainfall</h2>
+          <p class="chart-desc">
+            Examining whether windier cities tend to be wetter or drier, this scatter plot maps wind
+            speed against annual rainfall. Hobart and Perth, two of the windiest cities, sit on
+            opposite ends of the rainfall spectrum, suggesting that wind alone is a poor predictor
+            of precipitation. The visualisation highlights the complexity of Australian climate dynamics.
+          </p>
+        </div>
+      </div>
+      <div class="dropdown-container" id="dropdown-container-10"></div>
+      <div id="vis10" class="vega-chart"></div>
+    </div>
+  </section>
+
+  <section class="grid grid-2">
+    <div class="chart-card" id="card-11">
+      <div class="chart-card-header">
+        <div class="chart-num">11</div>
+        <div>
+          <h2 class="chart-title">Temperature Distribution by City</h2>
+          <p class="chart-desc">
+            Inspired by box plots, this custom visualisation shows each city's temperature range,
+            interquartile spread, and median. Alice Springs has the widest range (nearly 20&#176;C between
+            extremes), reflecting harsh desert diurnal and seasonal swings. Darwin's narrow band
+            confirms its equatorial climate stability.
+          </p>
+        </div>
+      </div>
+      <div id="vis11" class="vega-chart"></div>
+      <div class="chart-legend" id="legend-11">
+        <span class="legend-line" style="background:#d1d5db;height:4px;width:24px;display:inline-block;vertical-align:middle"></span> Full Range
+        <span class="legend-line" style="background:#60a5fa;height:8px;width:16px;display:inline-block;vertical-align:middle;border-radius:2px"></span> IQR
+        <span class="legend-dot" style="background:#1e40af;width:10px;height:10px"></span> Median
+      </div>
+    </div>
+
+    <div class="chart-card" id="card-12">
+      <div class="chart-card-header">
+        <div class="chart-num">12</div>
+        <div>
+          <h2 class="chart-title">Seasonal Rainfall Trends</h2>
+          <p class="chart-desc">
+            A radar chart comparing how rainfall distributes across the four seasons for selected cities.
+            Darwin's dramatic summer spike and dry winter create a sharply asymmetric shape, while
+            Melbourne's more balanced polygon reflects its year-round rainfall. Perth's winter-heavy
+            pattern produces a distinctive shape pointing toward the winter axis.
+          </p>
+        </div>
+      </div>
+      <div id="vis12" class="vega-chart"></div>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <p>Data sourced from Bureau of Meteorology historical averages across major Australian cities.</p>
+    <p class="footer-small">Built with Vega-Lite. Interactive tooltips enabled on all charts.</p>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

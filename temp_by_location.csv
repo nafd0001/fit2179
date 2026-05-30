@@ -1,0 +1,13 @@
+Location,avg_temp,latitude,longitude,City,fillColor
+Adelaide,17.7,-34.9285,138.6007,Adelaide,#74add1
+AliceSprings,21.2,-23.698,133.8807,Alice Springs,#abd9e9
+Brisbane,21.4,-27.4698,153.0251,Brisbane,#abd9e9
+Cairns,25.4,-16.9186,145.7781,Cairns,#fee090
+Canberra,13.9,-35.2809,149.13,Canberra,#74add1
+Darwin,27.9,-12.4634,130.8456,Darwin,#f46d43
+Hobart,13.5,-42.8821,147.3272,Hobart,#74add1
+Melbourne,16.3,-37.8136,144.9631,Melbourne,#74add1
+Perth,19.0,-31.9505,115.8605,Perth,#abd9e9
+Sydney,18.9,-33.8688,151.2093,Sydney,#abd9e9
+Townsville,24.9,-19.2564,146.8183,Townsville,#fee090
+Woomera,20.0,-31.15,136.8167,Woomera,#abd9e9

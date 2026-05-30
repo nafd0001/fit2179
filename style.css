@@ -1,0 +1,505 @@
+/* Australian Climate Dashboard - style.css */
+
+/* RESET AND BASE */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --navy:         #0f2744;
+  --navy-md:      #1a3a5c;
+  --sky:          #3b82f6;
+  --sky-lt:       #93c5fd;
+  --amber:        #f59e0b;
+  --amber-lt:     #fde68a;
+  --red:          #ef4444;
+  --teal:         #0d9488;
+  --slate:        #f1f5f9;
+  --white:        #ffffff;
+  --text:         #1e293b;
+  --text-md:      #475569;
+  --text-lt:      #94a3b8;
+  --border:       #e2e8f0;
+  --shadow:       0 2px 16px rgba(15,39,68,0.07);
+  --shadow-hover: 0 8px 32px rgba(15,39,68,0.13);
+  --radius:       16px;
+  --radius-sm:    10px;
+  --font-display: 'Playfair Display', Georgia, serif;
+  --font-body:    'DM Sans', system-ui, sans-serif;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font-body);
+  background: var(--slate);
+  color: var(--text);
+  line-height: 1.65;
+  font-size: 15px;
+}
+
+/* HERO */
+.hero {
+  position: relative;
+  background: var(--navy);
+  color: var(--white);
+  padding: 80px 48px 60px;
+  overflow: hidden;
+}
+
+.hero-bg-grid {
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(circle, rgba(255,255,255,0.06) 1px, transparent 1px);
+  background-size: 32px 32px;
+  pointer-events: none;
+}
+
+.hero::after {
+  content: '';
+  position: absolute;
+  bottom: -60px;
+  left: -10%;
+  width: 120%;
+  height: 120px;
+  background: var(--slate);
+  transform: rotate(-2deg);
+}
+
+.hero-inner {
+  position: relative;
+  z-index: 1;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.hero-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.18);
+  border-radius: 999px;
+  padding: 5px 16px;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  margin-bottom: 24px;
+  backdrop-filter: blur(6px);
+}
+
+.hero-title {
+  font-family: var(--font-display);
+  font-size: clamp(2.4rem, 5vw, 4rem);
+  font-weight: 900;
+  line-height: 1.12;
+  letter-spacing: -0.02em;
+  margin-bottom: 20px;
+}
+
+.hero-title em {
+  font-style: normal;
+  color: var(--amber);
+}
+
+.hero-sub {
+  max-width: 640px;
+  color: rgba(255,255,255,0.72);
+  font-size: 15px;
+  font-weight: 300;
+  margin-bottom: 48px;
+}
+
+/* KPI STRIP */
+.kpi-strip {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 16px;
+}
+
+.kpi-card {
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: var(--radius-sm);
+  padding: 18px 22px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  backdrop-filter: blur(8px);
+  transition: background-color 0.2s;
+}
+
+.kpi-card:hover {
+  background: rgba(255,255,255,0.13);
+}
+
+.kpi-icon {
+  font-size: 28px;
+  flex-shrink: 0;
+}
+
+.kpi-val {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 1.7rem;
+  font-weight: 700;
+  color: var(--white);
+  line-height: 1.1;
+}
+
+.kpi-label {
+  display: block;
+  font-size: 12px;
+  color: rgba(255,255,255,0.55);
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  margin-top: 2px;
+}
+
+/* SECTION DIVIDER */
+.section-divider {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  max-width: 1240px;
+  margin: 56px auto 0;
+  padding: 0 24px;
+}
+
+.section-divider::before,
+.section-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+.section-divider span {
+  white-space: nowrap;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-lt);
+  padding: 0 4px;
+}
+
+/* GRID LAYOUTS */
+.grid {
+  max-width: 1240px;
+  margin: 24px auto;
+  padding: 0 24px;
+  display: grid;
+  gap: 24px;
+}
+
+.grid-1 { grid-template-columns: 1fr; }
+.grid-2 { grid-template-columns: repeat(2, 1fr); }
+
+@media (max-width: 820px) {
+  .grid-2 { grid-template-columns: 1fr; }
+  .hero { padding: 60px 24px 48px; }
+}
+
+/* CHART CARDS */
+.chart-card {
+  background: var(--white);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 28px 28px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  transition: box-shadow 0.25s, transform 0.25s;
+  border: 1px solid rgba(226,232,240,0.8);
+}
+
+.chart-card:hover {
+  box-shadow: var(--shadow-hover);
+  transform: translateY(-2px);
+}
+
+.chart-card-header {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+}
+
+.chart-num {
+  flex-shrink: 0;
+  width: 38px;
+  height: 38px;
+  background: var(--navy);
+  color: var(--white);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-size: 14px;
+  font-weight: 700;
+  margin-top: 2px;
+}
+
+.chart-title {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--navy);
+  margin-bottom: 6px;
+  line-height: 1.25;
+}
+
+.chart-desc {
+  font-size: 13.5px;
+  color: var(--text-md);
+  line-height: 1.65;
+  font-weight: 300;
+}
+
+/* VEGA CHART CONTAINER */
+.vega-chart {
+  width: 100%;
+  min-height: 340px;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  background: #fafbfc;
+  border: 1px solid var(--border);
+}
+
+.vega-chart--wide {
+  min-height: 360px;
+}
+
+.vega-chart .vega-embed {
+  width: 100% !important;
+}
+
+.vega-chart canvas,
+.vega-chart svg {
+  display: block;
+  width: 100% !important;
+  height: auto !important;
+}
+
+/* CHART LEGEND */
+.chart-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 14px;
+  font-size: 12px;
+  color: var(--text-md);
+  font-weight: 400;
+  align-items: center;
+  padding-top: 4px;
+  border-top: 1px solid var(--border);
+}
+
+.legend-dot {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  vertical-align: middle;
+  margin-right: 3px;
+  flex-shrink: 0;
+}
+
+/* FOOTER */
+.site-footer {
+  text-align: center;
+  padding: 56px 24px 40px;
+  color: var(--text-lt);
+  font-size: 13px;
+  border-top: 1px solid var(--border);
+  margin-top: 56px;
+  max-width: 1240px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.footer-small {
+  font-size: 12px;
+  margin-top: 4px;
+  opacity: 0.7;
+}
+
+/* VEGA-EMBED ACTIONS BUTTON (three-dot menu) */
+.vega-embed summary {
+  width: 14px !important;
+  height: 14px !important;
+  padding: 2px !important;
+  opacity: 0.25;
+  transition: opacity 0.2s;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+.vega-embed summary:hover {
+  opacity: 0.7;
+}
+
+.vega-embed details {
+  top: 6px !important;
+  right: 6px !important;
+}
+
+/* VEGA TOOLTIP */
+.vg-tooltip {
+  background: var(--navy) !important;
+  color: var(--white) !important;
+  border: none !important;
+  border-radius: 8px !important;
+  font-family: var(--font-body) !important;
+  font-size: 13px !important;
+  padding: 10px 14px !important;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.25) !important;
+}
+
+.vg-tooltip td.key {
+  color: rgba(255,255,255,0.6) !important;
+  font-weight: 400 !important;
+}
+
+.vg-tooltip td.value {
+  color: var(--amber) !important;
+  font-weight: 600 !important;
+}
+
+/* PLACEHOLDER STATE */
+.vega-chart:empty::after {
+  content: 'Chart coming soon';
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  min-height: 340px;
+  color: var(--text-lt);
+  font-size: 13px;
+  letter-spacing: 0.04em;
+}
+
+/* FADE-IN ANIMATION */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.chart-card {
+  animation: fadeUp 0.45s ease both;
+}
+
+#card-1  { animation-delay: 0.05s; }
+#card-2  { animation-delay: 0.10s; }
+#card-3  { animation-delay: 0.15s; }
+#card-4  { animation-delay: 0.20s; }
+#card-5  { animation-delay: 0.25s; }
+#card-6  { animation-delay: 0.30s; }
+#card-7  { animation-delay: 0.35s; }
+#card-8  { animation-delay: 0.40s; }
+#card-9  { animation-delay: 0.45s; }
+#card-10 { animation-delay: 0.50s; }
+#card-11 { animation-delay: 0.55s; }
+#card-12 { animation-delay: 0.60s; }
+
+/* PILL TOGGLE BUTTONS (charts 3 and 4) */
+.pill-toggle {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding-bottom: 4px;
+}
+
+.pill-btn {
+  padding: 5px 14px;
+  border-radius: 999px;
+  border: 1.5px solid #e2e8f0;
+  background: transparent;
+  font-family: 'DM Sans', system-ui, sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  color: #475569;
+  cursor: pointer;
+  transition: background-color 0.15s, color 0.15s, border-color 0.15s;
+}
+
+.pill-btn:hover {
+  border-color: #94a3b8;
+  background: #f8fafc;
+}
+
+.pill-btn.active {
+  color: #ffffff;
+  border-color: transparent;
+}
+
+/* BOTTOM LEGEND */
+.bottom-legend {
+  justify-content: center;
+  padding-top: 8px;
+  gap: 4px 18px;
+  border-top: 1px solid #e2e8f0;
+}
+
+.bottom-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: #475569;
+}
+
+.bottom-legend-line {
+  width: 24px;
+  height: 3px;
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+
+/* CHART DROPDOWN */
+.dropdown-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-bottom: 4px;
+}
+
+.dropdown-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: #475569;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+}
+
+.chart-dropdown {
+  font-family: 'DM Sans', system-ui, sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  color: #1e293b;
+  background: #ffffff;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 6px 32px 6px 12px;
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23475569' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  transition: border-color 0.15s;
+}
+
+.chart-dropdown:hover {
+  border-color: #94a3b8;
+}
+
+.chart-dropdown:focus {
+  outline: none;
+  border-color: #3b82f6;
+}
+
+/* Chart 8 gradient legend full width */
+#vis8 .vega-embed svg .role-legend .gradient rect {
+  width: 100% !important;
+}

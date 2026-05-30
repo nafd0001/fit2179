@@ -1,0 +1,13 @@
+Location,annual_rainfall,latitude,longitude,City,rainfall_band
+Adelaide,572.0,-34.9285,138.6007,Adelaide,2_400to700
+AliceSprings,322.0,-23.698,133.8807,Alice Springs,1_under400
+Brisbane,1148.0,-27.4698,153.0251,Brisbane,4_1000to1500
+Cairns,2096.0,-16.9186,145.7781,Cairns,6_over2000
+Canberra,636.0,-35.2809,149.13,Canberra,2_400to700
+Darwin,1859.0,-12.4634,130.8456,Darwin,5_1500to2000
+Hobart,585.0,-42.8821,147.3272,Hobart,2_400to700
+Melbourne,683.0,-37.8136,144.9631,Melbourne,2_400to700
+Perth,696.0,-31.9505,115.8605,Perth,2_400to700
+Sydney,1213.0,-33.8688,151.2093,Sydney,4_1000to1500
+Townsville,1272.0,-19.2564,146.8183,Townsville,4_1000to1500
+Woomera,179.0,-31.15,136.8167,Woomera,1_under400

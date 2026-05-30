@@ -1,0 +1,50 @@
+Location,State,annual_rainfall,avg_temp,max_temp,min_temp,City
+Cairns,QLD,2096.0,25.4,29.6,21.2,Cairns
+Darwin,NT,1859.0,27.9,32.5,23.2,Darwin
+CoffsHarbour,NSW,1847.0,19.2,24.0,14.4,Coffs Harbour
+GoldCoast,QLD,1376.0,21.6,25.8,17.4,Gold Coast
+Wollongong,NSW,1312.0,18.2,21.5,14.9,Wollongong
+Williamtown,NSW,1311.0,18.4,24.0,12.8,Williamtown
+Townsville,QLD,1272.0,24.9,29.4,20.4,Townsville
+NorahHead,NSW,1236.0,19.0,22.6,15.4,Norah Head
+Sydney,NSW,1213.0,18.9,23.0,14.9,Sydney
+MountGinini,NSW,1202.0,7.6,11.7,3.6,Mount Ginini
+Katherine,NT,1168.0,27.7,34.9,20.6,Katherine
+Newcastle,NSW,1162.0,19.0,24.1,13.8,Newcastle
+Brisbane,QLD,1148.0,21.4,26.4,16.4,Brisbane
+NorfolkIsland,NSW,1142.0,19.4,21.8,16.9,Norfolk Island
+SydneyAirport,NSW,1099.0,19.1,23.4,14.9,Sydney Airport
+Walpole,WA,1061.0,16.1,20.5,11.8,Walpole
+Witchcliffe,WA,1057.0,16.2,21.7,10.8,Witchcliffe
+Portland,VIC,924.0,13.8,18.1,9.6,Portland
+Albany,WA,826.0,16.5,20.1,12.9,Albany
+BadgerysCreek,NSW,800.0,17.6,24.0,11.1,Badgerys Creek
+Penrith,NSW,794.0,18.7,24.8,12.6,Penrith
+Tuggeranong,NSW,790.0,14.0,20.8,7.2,Tuggeranong
+Dartmoor,VIC,783.0,14.2,19.7,8.6,Dartmoor
+Richmond,NSW,781.0,17.9,24.5,11.4,Richmond
+MountGambier,VIC,762.0,14.3,19.8,8.8,Mount Gambier
+Launceston,TAS,734.0,13.4,19.0,7.8,Launceston
+Albury,NSW,699.0,16.1,22.6,9.5,Albury
+Perth,WA,696.0,19.0,25.0,12.9,Perth
+Melbourne,VIC,683.0,16.3,20.8,11.8,Melbourne
+Watsonia,VIC,679.0,15.5,20.9,10.1,Watsonia
+PerthAirport,WA,643.0,19.1,25.5,12.6,Perth Airport
+Canberra,NSW,636.0,13.9,21.0,6.8,Canberra
+Ballarat,VIC,635.0,12.8,18.3,7.4,Ballarat
+WaggaWagga,NSW,624.0,16.3,23.0,9.6,Wagga Wagga
+PearceRAAF,WA,609.0,19.2,26.1,12.3,Pearce RAAF
+Moree,NSW,595.0,19.9,27.0,12.9,Moree
+Bendigo,VIC,591.0,15.1,21.6,8.6,Bendigo
+Hobart,TAS,585.0,13.5,17.9,9.1,Hobart
+Adelaide,SA,572.0,17.7,22.9,12.6,Adelaide
+Sale,VIC,551.0,14.4,20.3,8.6,Sale
+MelbourneAirport,VIC,530.0,15.2,20.5,10.0,Melbourne Airport
+Nuriootpa,SA,507.0,15.5,21.7,9.4,Nuriootpa
+Cobar,NSW,411.0,19.5,25.9,13.1,Cobar
+SalmonGums,WA,378.0,16.8,24.3,9.3,Salmon Gums
+Mildura,VIC,345.0,17.8,24.8,10.7,Mildura
+Nhil,VIC,341.0,15.7,22.4,9.0,Nhil
+AliceSprings,NT,322.0,21.2,29.2,13.1,Alice Springs
+Uluru,NT,286.0,22.4,30.4,14.5,Uluru
+Woomera,SA,179.0,20.0,26.6,13.4,Woomera
