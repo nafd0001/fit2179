@@ -557,11 +557,10 @@ document.addEventListener('DOMContentLoaded', async function () {
       'data': { 'values': cityScatterData },
       'layer': [
         {
-          'mark': { 'type': 'point', 'filled': true, 'opacity': 0.85 },
+          'mark': { 'type': 'point', 'filled': true, 'opacity': 0.85, 'size': 200 },
           'encoding': {
             'x': { 'field': 'avg_temp', 'type': 'quantitative', 'title': 'Average Temperature (C)', 'scale': { 'padding': 40 }, 'axis': { 'labelExpr': "datum.value + 'C'" } },
             'y': { 'field': 'avg_humidity', 'type': 'quantitative', 'title': 'Average Humidity (%)', 'scale': { 'padding': 40 }, 'axis': { 'labelExpr': "datum.value + '%'" } },
-            'size': { 'field': 'annual_rainfall', 'type': 'quantitative', 'title': 'Estimated Annual Rainfall (mm)', 'scale': { 'range': [60, 600] }, 'legend': { 'orient': 'bottom', 'title': 'Estimated Annual Rainfall (mm)' } },
             'fill': { 'field': 'fillColor', 'type': 'nominal', 'scale': null, 'legend': null },
             'tooltip': [
               { 'field': 'City',            'type': 'nominal',      'title': 'City' },
