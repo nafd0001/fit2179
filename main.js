@@ -773,10 +773,128 @@ document.addEventListener('DOMContentLoaded', async function () {
     renderChart10('overview');
   })();
 
-  var spec11 = null;
+  /* CHART 11 - Temperature Distribution by City */
+  var spec11 = {
+    '$schema': 'https://vega.github.io/schema/vega-lite/v5.json',
+    'width': 'container',
+    'height': 420,
+    'data': { 'url': 'temp_distribution.csv' },
+    'layer': [
+      {
+        'mark': { 'type': 'rule', 'color': '#e2e8f0', 'strokeWidth': 6, 'strokeCap': 'round' },
+        'encoding': {
+          'y': { 'field': 'City', 'type': 'nominal', 'sort': { 'field': 'Median', 'order': 'descending' }, 'title': null, 'axis': { 'labelFontSize': 11 } },
+          'x': { 'field': 'Min', 'type': 'quantitative', 'title': 'Temperature (C)', 'axis': { 'labelExpr': "datum.value + 'C'" } },
+          'x2': { 'field': 'Max' },
+          'tooltip': [
+            { 'field': 'City',   'type': 'nominal',      'title': 'City' },
+            { 'field': 'Min',    'type': 'quantitative', 'title': 'Min (C)',     'format': '.1f' },
+            { 'field': 'Q1',     'type': 'quantitative', 'title': 'Q1 (C)',      'format': '.1f' },
+            { 'field': 'Median', 'type': 'quantitative', 'title': 'Median (C)',  'format': '.1f' },
+            { 'field': 'Q3',     'type': 'quantitative', 'title': 'Q3 (C)',      'format': '.1f' },
+            { 'field': 'Max',    'type': 'quantitative', 'title': 'Max (C)',     'format': '.1f' }
+          ]
+        }
+      },
+      {
+        'mark': { 'type': 'bar', 'height': 10, 'cornerRadiusEnd': 3 },
+        'encoding': {
+          'y': { 'field': 'City', 'type': 'nominal', 'sort': { 'field': 'Median', 'order': 'descending' } },
+          'x': { 'field': 'Q1', 'type': 'quantitative' },
+          'x2': { 'field': 'Q3' },
+          'color': {
+            'field': 'City', 'type': 'nominal',
+            'scale': { 'domain': cityList, 'range': cityList.map(function(c) { return cityColors[c]; }) },
+            'legend': null
+          },
+          'tooltip': [
+            { 'field': 'City',   'type': 'nominal',      'title': 'City' },
+            { 'field': 'Min',    'type': 'quantitative', 'title': 'Min (C)',     'format': '.1f' },
+            { 'field': 'Q1',     'type': 'quantitative', 'title': 'Q1 (C)',      'format': '.1f' },
+            { 'field': 'Median', 'type': 'quantitative', 'title': 'Median (C)',  'format': '.1f' },
+            { 'field': 'Q3',     'type': 'quantitative', 'title': 'Q3 (C)',      'format': '.1f' },
+            { 'field': 'Max',    'type': 'quantitative', 'title': 'Max (C)',     'format': '.1f' }
+          ]
+        }
+      },
+      {
+        'mark': { 'type': 'tick', 'color': 'white', 'thickness': 2.5, 'height': 14 },
+        'encoding': {
+          'y': { 'field': 'City', 'type': 'nominal', 'sort': { 'field': 'Median', 'order': 'descending' } },
+          'x': { 'field': 'Median', 'type': 'quantitative' },
+          'tooltip': [
+            { 'field': 'City',   'type': 'nominal',      'title': 'City' },
+            { 'field': 'Median', 'type': 'quantitative', 'title': 'Median (C)',  'format': '.1f' }
+          ]
+        }
+      },
+      {
+        'mark': { 'type': 'text', 'align': 'left', 'dx': 5, 'fontSize': 10, 'fontWeight': 500, 'color': '#475569' },
+        'encoding': {
+          'y': { 'field': 'City', 'type': 'nominal', 'sort': { 'field': 'Median', 'order': 'descending' } },
+          'x': { 'field': 'Max', 'type': 'quantitative' },
+          'text': { 'field': 'Range', 'type': 'nominal' }
+        }
+      }
+    ],
+    'config': { 'view': { 'stroke': null } }
+  };
   await embedChart('vis11', spec11);
 
-  var spec12 = null;
-  await embedChart('vis12', spec12);
+  /* CHART 12 - Seasonal Rainfall Trends */
+  var activeCities12 = ['Sydney'];
+
+  function makeSpec12(cities) {
+    var filterExpr = cities.map(function(c) { return 'datum.City === "' + c + '"'; }).join(' || ');
+    var domain = cities;
+    var range  = cities.map(function(c) { return cityColors[c]; });
+    return {
+      '$schema': 'https://vega.github.io/schema/vega-lite/v5.json',
+      'width': 'container',
+      'height': 300,
+      'data': { 'url': 'seasonal_rainfall.csv' },
+      'transform': [{ 'filter': filterExpr }],
+      'layer': [
+        {
+          'mark': { 'type': 'line', 'point': { 'filled': true, 'size': 60 }, 'strokeWidth': 2.5 },
+          'encoding': {
+            'x': {
+              'field': 'Season', 'type': 'nominal',
+              'sort': ['Summer','Autumn','Winter','Spring'],
+              'title': null,
+              'axis': { 'labelFontSize': 12, 'labelFontWeight': 600 }
+            },
+            'y': {
+              'field': 'Rainfall', 'type': 'quantitative',
+              'title': 'Average Daily Rainfall (mm)',
+              'axis': { 'labelExpr': "datum.value + ' mm'" }
+            },
+            'color': {
+              'field': 'City', 'type': 'nominal',
+              'legend': null,
+              'scale': { 'domain': domain, 'range': range }
+            },
+            'tooltip': [
+              { 'field': 'City',     'type': 'nominal',      'title': 'City' },
+              { 'field': 'Season',   'type': 'nominal',      'title': 'Season' },
+              { 'field': 'Rainfall', 'type': 'quantitative', 'title': 'Avg Daily Rainfall (mm)', 'format': '.2f' }
+            ]
+          }
+        }
+      ],
+      'config': { 'view': { 'stroke': null } }
+    };
+  }
+
+  function renderChart12(toggleCity) {
+    var idx = activeCities12.indexOf(toggleCity);
+    if (idx === -1) { activeCities12.push(toggleCity); }
+    else if (activeCities12.length > 1) { activeCities12.splice(idx, 1); }
+    buildPills('pills-12', activeCities12, renderChart12);
+    buildBottomLegend('bottom-legend-12', activeCities12);
+    embedChart('vis12', makeSpec12(activeCities12));
+  }
+
+  renderChart12('Sydney');
 
 });
