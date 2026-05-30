@@ -553,8 +553,9 @@ document.addEventListener('DOMContentLoaded', async function () {
 
     return {
       '$schema': 'https://vega.github.io/schema/vega-lite/v5.json',
-      'width': 'container', 'height': 380,
+      'width': 'container', 'height': 450,
       'data': { 'values': cityScatterData },
+      'params': [{ 'name': 'grid', 'select': 'interval', 'bind': 'scales' }],
       'layer': [
         {
           'mark': { 'type': 'point', 'filled': true, 'opacity': 0.85 },
