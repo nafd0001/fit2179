@@ -536,18 +536,18 @@ document.addEventListener('DOMContentLoaded', async function () {
 
   function makeSpec9overview() {
     var cityScatterData = [
-      { City: 'Sydney',        avg_temp: 18.9, avg_humidity: 61.5, annual_rainfall: 1213, labelDx:  8,  labelDy: -8  },
-      { City: 'Melbourne',     avg_temp: 16.3, avg_humidity: 59.4, annual_rainfall:  683, labelDx: -50, labelDy: -8  },
-      { City: 'Brisbane',      avg_temp: 21.4, avg_humidity: 59.0, annual_rainfall: 1148, labelDx:  8,  labelDy: -8  },
-      { City: 'Perth',         avg_temp: 19.0, avg_humidity: 54.8, annual_rainfall:  696, labelDx:  8,  labelDy:  12 },
-      { City: 'Adelaide',      avg_temp: 17.7, avg_humidity: 52.3, annual_rainfall:  572, labelDx:  8,  labelDy:  12 },
-      { City: 'Hobart',        avg_temp: 13.5, avg_humidity: 59.3, annual_rainfall:  585, labelDx: -36, labelDy: -8  },
-      { City: 'Darwin',        avg_temp: 27.9, avg_humidity: 60.2, annual_rainfall: 1859, labelDx:  8,  labelDy: -8  },
-      { City: 'Cairns',        avg_temp: 25.4, avg_humidity: 65.8, annual_rainfall: 2096, labelDx:  8,  labelDy: -10 },
-      { City: 'Canberra',      avg_temp: 13.9, avg_humidity: 59.6, annual_rainfall:  636, labelDx: -44, labelDy:  8  },
-      { City: 'Townsville',    avg_temp: 24.9, avg_humidity: 60.7, annual_rainfall: 1272, labelDx:  8,  labelDy:  10 },
-      { City: 'Alice Springs', avg_temp: 21.2, avg_humidity: 31.9, annual_rainfall:  322, labelDx:  8,  labelDy: -10 },
-      { City: 'Woomera',       avg_temp: 20.0, avg_humidity: 40.8, annual_rainfall:  179, labelDx:  8,  labelDy: -10 }
+      { City: 'Sydney',        avg_temp: 18.9, avg_humidity: 61.5, annual_rainfall: 1213, labelDx:  8,  labelDy: -12 },
+      { City: 'Melbourne',     avg_temp: 16.3, avg_humidity: 59.4, annual_rainfall:  683, labelDx: -52, labelDy: -12 },
+      { City: 'Brisbane',      avg_temp: 21.4, avg_humidity: 59.0, annual_rainfall: 1148, labelDx:  8,  labelDy: -12 },
+      { City: 'Perth',         avg_temp: 19.0, avg_humidity: 54.8, annual_rainfall:  696, labelDx:  8,  labelDy:  14 },
+      { City: 'Adelaide',      avg_temp: 17.7, avg_humidity: 52.3, annual_rainfall:  572, labelDx:  8,  labelDy:  14 },
+      { City: 'Hobart',        avg_temp: 13.5, avg_humidity: 59.3, annual_rainfall:  585, labelDx: -38, labelDy:  14 },
+      { City: 'Darwin',        avg_temp: 27.9, avg_humidity: 60.2, annual_rainfall: 1859, labelDx:  8,  labelDy: -12 },
+      { City: 'Cairns',        avg_temp: 25.4, avg_humidity: 65.8, annual_rainfall: 2096, labelDx:  8,  labelDy: -12 },
+      { City: 'Canberra',      avg_temp: 13.9, avg_humidity: 59.6, annual_rainfall:  636, labelDx: -46, labelDy: -12 },
+      { City: 'Townsville',    avg_temp: 24.9, avg_humidity: 60.7, annual_rainfall: 1272, labelDx:  8,  labelDy:  14 },
+      { City: 'Alice Springs', avg_temp: 21.2, avg_humidity: 31.9, annual_rainfall:  322, labelDx:  8,  labelDy: -12 },
+      { City: 'Woomera',       avg_temp: 20.0, avg_humidity: 40.8, annual_rainfall:  179, labelDx:  8,  labelDy: -12 }
     ];
     cityScatterData.forEach(function(d) { d.fillColor = cityColors[d.City] || '#999'; });
 
@@ -555,7 +555,6 @@ document.addEventListener('DOMContentLoaded', async function () {
       '$schema': 'https://vega.github.io/schema/vega-lite/v5.json',
       'width': 'container', 'height': 450,
       'data': { 'values': cityScatterData },
-      'params': [{ 'name': 'zoom9', 'select': 'interval', 'bind': 'scales' }],
       'layer': [
         {
           'mark': { 'type': 'point', 'filled': true, 'opacity': 0.85 },
