@@ -676,7 +676,7 @@ document.addEventListener('DOMContentLoaded', async function () {
             'color': {
               'field': 'City', 'type': 'nominal',
               'scale': { 'domain': cityList, 'range': cityList.map(function(c) { return cityColors[c]; }) },
-              'legend': { 'orient': 'bottom', 'title': 'City', 'columns': 6 }
+              
             },
             'tooltip': [
               { 'field': 'City',            'type': 'nominal',      'title': 'City' },
