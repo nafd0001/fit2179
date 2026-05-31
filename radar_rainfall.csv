@@ -1,0 +1,49 @@
+City,Season,Rainfall,angle,px,py
+Adelaide,Summer,0.98,-90,0.0,-0.98
+Adelaide,Autumn,1.61,0,1.61,0.0
+Adelaide,Winter,2.5,90,0.0,2.5
+Adelaide,Spring,1.14,180,-1.14,0.0
+Alice Springs,Summer,1.97,-90,0.0,-1.97
+Alice Springs,Autumn,0.68,0,0.68,0.0
+Alice Springs,Winter,0.36,90,0.0,0.36
+Alice Springs,Spring,0.53,180,-0.53,0.0
+Brisbane,Summer,5.35,-90,0.0,-5.35
+Brisbane,Autumn,3.49,0,3.49,0.0
+Brisbane,Winter,1.6,90,0.0,1.6
+Brisbane,Spring,2.36,180,-2.36,0.0
+Cairns,Summer,12.15,-90,0.0,-12.15
+Cairns,Autumn,6.88,0,6.88,0.0
+Cairns,Winter,1.18,90,0.0,1.18
+Cairns,Spring,2.66,180,-2.66,0.0
+Canberra,Summer,2.25,-90,0.0,-2.25
+Canberra,Autumn,1.35,0,1.35,0.0
+Canberra,Winter,1.44,90,0.0,1.44
+Canberra,Spring,1.95,180,-1.95,0.0
+Darwin,Summer,13.95,-90,0.0,-13.95
+Darwin,Autumn,4.3,0,4.3,0.0
+Darwin,Winter,0.0,90,0.0,0.0
+Darwin,Spring,2.83,180,-2.83,0.0
+Hobart,Summer,1.36,-90,0.0,-1.36
+Hobart,Autumn,1.27,0,1.27,0.0
+Hobart,Winter,1.83,90,0.0,1.83
+Hobart,Spring,1.92,180,-1.92,0.0
+Melbourne,Summer,1.69,-90,0.0,-1.69
+Melbourne,Autumn,1.7,0,1.7,0.0
+Melbourne,Winter,1.79,90,0.0,1.79
+Melbourne,Spring,2.25,180,-2.25,0.0
+Perth,Summer,0.61,-90,0.0,-0.61
+Perth,Autumn,1.6,0,1.6,0.0
+Perth,Winter,3.73,90,0.0,3.73
+Perth,Spring,1.57,180,-1.57,0.0
+Sydney,Summer,3.28,-90,0.0,-3.28
+Sydney,Autumn,3.99,0,3.99,0.0
+Sydney,Winter,3.65,90,0.0,3.65
+Sydney,Spring,2.29,180,-2.29,0.0
+Townsville,Summer,8.34,-90,0.0,-8.34
+Townsville,Autumn,4.0,0,4.0,0.0
+Townsville,Winter,0.66,90,0.0,0.66
+Townsville,Spring,0.88,180,-0.88,0.0
+Woomera,Summer,0.62,-90,0.0,-0.62
+Woomera,Autumn,0.52,0,0.52,0.0
+Woomera,Winter,0.42,90,0.0,0.42
+Woomera,Spring,0.4,180,-0.4,0.0
