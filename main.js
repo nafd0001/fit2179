@@ -555,15 +555,15 @@ document.addEventListener('DOMContentLoaded', async function () {
       '$schema': 'https://vega.github.io/schema/vega-lite/v5.json',
       'width': 'container', 'height': 450,
       'data': { 'values': cityScatterData },
-      'params': [{ 'name': 'highlightBubble', 'select': { 'type': 'point', 'on': 'pointerover', 'clear': 'pointerout', 'nearest': true } }],
+
       'layer': [
         {
           'mark': { 'type': 'point', 'filled': true, 'size': 300 },
           'encoding': {
-            'x': { 'field': 'avg_temp', 'type': 'quantitative', 'title': 'Average Temperature (C)', 'scale': { 'padding': 40 }, 'axis': { 'labelExpr': "datum.value + 'C'" } },
+            'x': { 'field': 'avg_temp', 'type': 'quantitative', 'title': 'Average Temperature (C)', 'scale': { 'padding': 40 }, 'axis': { 'labelExpr': "datum.value + 'C'", 'tickMinStep': 0.5 } },
             'y': { 'field': 'avg_humidity', 'type': 'quantitative', 'title': 'Average Humidity (%)', 'scale': { 'padding': 40 }, 'axis': { 'labelExpr': "datum.value + '%'" } },
             'fill': { 'field': 'fillColor', 'type': 'nominal', 'scale': null, 'legend': null },
-            'opacity': { 'condition': { 'param': 'highlightBubble', 'empty': true, 'value': 0.85 }, 'value': 0.2 },
+            'opacity': { 'value': 0.85 },
             'tooltip': [
               { 'field': 'City',            'type': 'nominal',      'title': 'City' },
               { 'field': 'avg_temp',        'type': 'quantitative', 'title': 'Average Temperature (C)', 'format': '.1f' },
