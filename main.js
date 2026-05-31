@@ -555,13 +555,15 @@ document.addEventListener('DOMContentLoaded', async function () {
       '$schema': 'https://vega.github.io/schema/vega-lite/v5.json',
       'width': 'container', 'height': 450,
       'data': { 'values': cityScatterData },
+      'params': [{ 'name': 'hover9', 'select': { 'type': 'point', 'on': 'pointerover', 'clear': 'pointerout', 'nearest': true, 'empty': 'all' } }],
       'layer': [
         {
-          'mark': { 'type': 'point', 'filled': true, 'opacity': 0.7, 'size': 300 },
+          'mark': { 'type': 'point', 'filled': true, 'size': 300 },
           'encoding': {
             'x': { 'field': 'avg_temp', 'type': 'quantitative', 'title': 'Average Temperature (C)', 'scale': { 'padding': 40 }, 'axis': { 'labelExpr': "datum.value + 'C'" } },
             'y': { 'field': 'avg_humidity', 'type': 'quantitative', 'title': 'Average Humidity (%)', 'scale': { 'padding': 40 }, 'axis': { 'labelExpr': "datum.value + '%'" } },
             'fill': { 'field': 'fillColor', 'type': 'nominal', 'scale': null, 'legend': null },
+            'opacity': { 'condition': { 'param': 'hover9', 'value': 0.95 }, 'value': 0.2 },
             'tooltip': [
               { 'field': 'City',            'type': 'nominal',      'title': 'City' },
               { 'field': 'avg_temp',        'type': 'quantitative', 'title': 'Average Temperature (C)', 'format': '.1f' },
@@ -594,67 +596,44 @@ document.addEventListener('DOMContentLoaded', async function () {
     };
   }
   function makeSpec9facet(city) {
-  var cities = city === 'All' ? cityList : [city];
-  var filterExpr = cities.map(function(c) { return 'datum.City === "' + c + '"'; }).join(' || ');
-  return {
-    '$schema': 'https://vega.github.io/schema/vega-lite/v5.json',
-    'data': { 'url': 'monthly_scatter.csv' },
-    'transform': [{ 'filter': filterExpr }],
-    'facet': { 'field': 'City', 'type': 'nominal', 'header': { 'title': null, 'labelFontSize': 11, 'labelFontWeight': 600 } },
-    'columns': 3,
-    'spec': {
-      'width': 140, 'height': 120,
-      // 👇 Define the interaction parameter inside the child spec
-      'params': [
-        {
-          'name': 'hover_point',
-          'select': {
-            'type': 'point',
-            'on': 'pointerover',
-            'clear': 'pointerout',
-            'nearest': true,
-            'empty': 'all'
-          }
-        }
-      ],
-      'layer': [
-        {
-          'mark': { 'type': 'point', 'filled': true, 'size': 50 }, // Increased size slightly for better scannability
-          'encoding': {
-            'x': { 'field': 'avg_temp', 'type': 'quantitative', 'title': 'Temperature (C)', 'axis': { 'labelFontSize': 9, 'titleFontSize': 9, 'labelExpr': "datum.value + 'C'" } },
-            'y': { 'field': 'avg_humidity', 'type': 'quantitative', 'title': 'Humidity (%)', 'axis': { 'labelFontSize': 9, 'titleFontSize': 9, 'labelExpr': "datum.value + '%'" } },
-            'color': { 'field': 'City', 'type': 'nominal', 'scale': { 'domain': cityList, 'range': cityList.map(function(c) { return cityColors[c]; }) }, 'legend': null },
-            // 👇 Apply conditional opacity: full brightness on hover, faded out for others
-            'opacity': {
-              'condition': { 'param': 'hover_point', 'value': 0.9 },
-              'value': 0.2
-            },
-            'tooltip': [
-              { 'field': 'City',         'type': 'nominal',      'title': 'City' },
-              { 'field': 'YearMonth',    'type': 'nominal',      'title': 'Month' },
-              { 'field': 'avg_temp',     'type': 'quantitative', 'title': 'Temperature (C)', 'format': '.1f' },
-              { 'field': 'avg_humidity', 'type': 'quantitative', 'title': 'Humidity (%)',    'format': '.1f' }
-            ]
-          }
-        },
-        {
-          'mark': { 'type': 'line', 'color': '#ef4444', 'strokeWidth': 1.5 },
-          'transform': [{ 'regression': 'avg_humidity', 'on': 'avg_temp', 'groupby': ['City'] }],
-          'encoding': {
-            'x': { 'field': 'avg_temp',     'type': 'quantitative' },
-            'y': { 'field': 'avg_humidity', 'type': 'quantitative' },
-            // 👇 The regression line drops in opacity slightly if a single point is isolated
-            'opacity': {
-              'condition': { 'param': 'hover_point', 'value': 1.0 },
-              'value': 0.4
+    var cities = city === 'All' ? cityList : [city];
+    var filterExpr = cities.map(function(c) { return 'datum.City === "' + c + '"'; }).join(' || ');
+    return {
+      '$schema': 'https://vega.github.io/schema/vega-lite/v5.json',
+      'data': { 'url': 'monthly_scatter.csv' },
+      'transform': [{ 'filter': filterExpr }],
+      'facet': { 'field': 'City', 'type': 'nominal', 'header': { 'title': null, 'labelFontSize': 11, 'labelFontWeight': 600 } },
+      'columns': 3,
+      'spec': {
+        'width': 140, 'height': 120,
+        'layer': [
+          {
+            'mark': { 'type': 'point', 'filled': true, 'size': 20, 'opacity': 0.5 },
+            'encoding': {
+              'x': { 'field': 'avg_temp', 'type': 'quantitative', 'title': 'Temperature (C)', 'axis': { 'labelFontSize': 9, 'titleFontSize': 9, 'labelExpr': "datum.value + 'C'" } },
+              'y': { 'field': 'avg_humidity', 'type': 'quantitative', 'title': 'Humidity (%)', 'axis': { 'labelFontSize': 9, 'titleFontSize': 9, 'labelExpr': "datum.value + '%'" } },
+              'color': { 'field': 'City', 'type': 'nominal', 'scale': { 'domain': cityList, 'range': cityList.map(function(c) { return cityColors[c]; }) }, 'legend': null },
+              'tooltip': [
+                { 'field': 'City',         'type': 'nominal',      'title': 'City' },
+                { 'field': 'YearMonth',    'type': 'nominal',      'title': 'Month' },
+                { 'field': 'avg_temp',     'type': 'quantitative', 'title': 'Temperature (C)', 'format': '.1f' },
+                { 'field': 'avg_humidity', 'type': 'quantitative', 'title': 'Humidity (%)',    'format': '.1f' }
+              ]
+            }
+          },
+          {
+            'mark': { 'type': 'line', 'color': '#ef4444', 'strokeWidth': 1.5 },
+            'transform': [{ 'regression': 'avg_humidity', 'on': 'avg_temp', 'groupby': ['City'] }],
+            'encoding': {
+              'x': { 'field': 'avg_temp',     'type': 'quantitative' },
+              'y': { 'field': 'avg_humidity', 'type': 'quantitative' }
             }
           }
-        }
-      ]
-    },
-    'config': { 'view': { 'stroke': '#e2e8f0' } }
-  };
-}
+        ]
+      },
+      'config': { 'view': { 'stroke': '#e2e8f0' } }
+    };
+  }
   function renderChart9(mode) {
     activeMode9 = mode;
     var select = document.getElementById('dropdown-9');
@@ -699,7 +678,7 @@ document.addEventListener('DOMContentLoaded', async function () {
             'color': {
               'field': 'City', 'type': 'nominal',
               'scale': { 'domain': cityList, 'range': cityList.map(function(c) { return cityColors[c]; }) },
-              
+              'legend': { 'orient': 'bottom', 'title': 'City', 'columns': 6 }
             },
             'tooltip': [
               { 'field': 'City',            'type': 'nominal',      'title': 'City' },
@@ -919,7 +898,6 @@ document.addEventListener('DOMContentLoaded', async function () {
     if (idx === -1) { activeCities12.push(toggleCity); }
     else if (activeCities12.length > 1) { activeCities12.splice(idx, 1); }
     buildPills('pills-12', activeCities12, renderChart12);
-    buildBottomLegend('bottom-legend-12', activeCities12);
     embedChart('vis12', makeSpec12(activeCities12));
   }
 
