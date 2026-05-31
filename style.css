@@ -54,14 +54,7 @@ body {
 }
 
 .hero::after {
-  content: '';
-  position: absolute;
-  bottom: -60px;
-  left: -10%;
-  width: 120%;
-  height: 120px;
-  background: var(--slate);
-  transform: rotate(-2deg);
+  display: none;
 }
 
 .hero-inner {
