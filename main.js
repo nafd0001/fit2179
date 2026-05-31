@@ -785,14 +785,14 @@ document.addEventListener('DOMContentLoaded', async function () {
         'encoding': {
           'y': { 'field': 'City', 'type': 'nominal', 'sort': { 'field': 'Median', 'order': 'descending' }, 'title': null, 'axis': { 'labelFontSize': 11 } },
           'x': { 'value': 0 },
-          'x2': { 'value': 10000 },
+          'x2': { 'value': 100000 },
           'tooltip': [
             { 'field': 'City',   'type': 'nominal',      'title': 'City' },
-            { 'field': 'Min',    'type': 'quantitative', 'title': 'Min (C)',     'format': '.1f' },
-            { 'field': 'Q1',     'type': 'quantitative', 'title': 'Q1 (C)',      'format': '.1f' },
-            { 'field': 'Median', 'type': 'quantitative', 'title': 'Median (C)',  'format': '.1f' },
-            { 'field': 'Q3',     'type': 'quantitative', 'title': 'Q3 (C)',      'format': '.1f' },
-            { 'field': 'Max',    'type': 'quantitative', 'title': 'Max (C)',     'format': '.1f' }
+            { 'field': 'Min',    'type': 'quantitative', 'title': 'Min (C)',    'format': '.1f' },
+            { 'field': 'Q1',     'type': 'quantitative', 'title': 'Q1 (C)',     'format': '.1f' },
+            { 'field': 'Median', 'type': 'quantitative', 'title': 'Median (C)', 'format': '.1f' },
+            { 'field': 'Q3',     'type': 'quantitative', 'title': 'Q3 (C)',     'format': '.1f' },
+            { 'field': 'Max',    'type': 'quantitative', 'title': 'Max (C)',    'format': '.1f' }
           ]
         }
       },
@@ -809,11 +809,11 @@ document.addEventListener('DOMContentLoaded', async function () {
           },
           'tooltip': [
             { 'field': 'City',   'type': 'nominal',      'title': 'City' },
-            { 'field': 'Min',    'type': 'quantitative', 'title': 'Min (C)',     'format': '.1f' },
-            { 'field': 'Q1',     'type': 'quantitative', 'title': 'Q1 (C)',      'format': '.1f' },
-            { 'field': 'Median', 'type': 'quantitative', 'title': 'Median (C)',  'format': '.1f' },
-            { 'field': 'Q3',     'type': 'quantitative', 'title': 'Q3 (C)',      'format': '.1f' },
-            { 'field': 'Max',    'type': 'quantitative', 'title': 'Max (C)',     'format': '.1f' }
+            { 'field': 'Min',    'type': 'quantitative', 'title': 'Min (C)',    'format': '.1f' },
+            { 'field': 'Q1',     'type': 'quantitative', 'title': 'Q1 (C)',     'format': '.1f' },
+            { 'field': 'Median', 'type': 'quantitative', 'title': 'Median (C)', 'format': '.1f' },
+            { 'field': 'Q3',     'type': 'quantitative', 'title': 'Q3 (C)',     'format': '.1f' },
+            { 'field': 'Max',    'type': 'quantitative', 'title': 'Max (C)',    'format': '.1f' }
           ]
         }
       },
@@ -824,15 +824,15 @@ document.addEventListener('DOMContentLoaded', async function () {
           'x': { 'field': 'Median', 'type': 'quantitative' },
           'tooltip': [
             { 'field': 'City',   'type': 'nominal',      'title': 'City' },
-            { 'field': 'Median', 'type': 'quantitative', 'title': 'Median (C)',  'format': '.1f' }
+            { 'field': 'Median', 'type': 'quantitative', 'title': 'Median (C)', 'format': '.1f' }
           ]
         }
       },
       {
-        'mark': { 'type': 'text', 'align': 'left', 'dx': 5, 'fontSize': 10, 'fontWeight': 500, 'color': '#475569' },
+        'mark': { 'type': 'text', 'align': 'right', 'dx': -8, 'fontSize': 10, 'fontWeight': 500, 'color': '#475569' },
         'encoding': {
           'y': { 'field': 'City', 'type': 'nominal', 'sort': { 'field': 'Median', 'order': 'descending' } },
-          'x': { 'field': 'Max', 'type': 'quantitative' },
+          'x': { 'value': 0 },
           'text': { 'field': 'Range', 'type': 'nominal' }
         }
       }
@@ -841,79 +841,44 @@ document.addEventListener('DOMContentLoaded', async function () {
   };
   await embedChart('vis11', spec11);
 
-  /* CHART 12 - Seasonal Rainfall Trends (radar with pre-computed x/y) */
+  /* CHART 12 - Seasonal Rainfall Trends (grouped bar chart) */
   var activeCities12 = ['Sydney'];
-
-  var radarLabels = [
-    { label: 'Summer', lx:  0,   ly: -1.3 },
-    { label: 'Autumn', lx:  1.5, ly:  0   },
-    { label: 'Winter', lx:  0,   ly:  1.3 },
-    { label: 'Spring', lx: -1.5, ly:  0   }
-  ];
 
   function makeSpec12(cities) {
     var filterExpr = cities.map(function(c) { return 'datum.City === "' + c + '"'; }).join(' || ');
     var domain = cities;
     var range  = cities.map(function(c) { return cityColors[c]; });
-
     return {
       '$schema': 'https://vega.github.io/schema/vega-lite/v5.json',
       'width': 'container',
-      'height': 360,
-      'layer': [
-        {
-          'data': { 'url': 'radar_rainfall.csv' },
-          'transform': [
-            { 'filter': filterExpr }
-          ],
-          'mark': { 'type': 'line', 'strokeWidth': 2, 'fillOpacity': 0.08 },
-          'encoding': {
-            'x': { 'field': 'px', 'type': 'quantitative', 'title': null, 'axis': null, 'scale': { 'nice': false, 'zero': true } },
-            'y': { 'field': 'py', 'type': 'quantitative', 'title': null, 'axis': null, 'scale': { 'nice': false, 'zero': true } },
-            'color': {
-              'field': 'City', 'type': 'nominal', 'legend': null,
-              'scale': { 'domain': domain, 'range': range }
-            },
-            'fill': {
-              'field': 'City', 'type': 'nominal', 'legend': null,
-              'scale': { 'domain': domain, 'range': range }
-            },
-            'order': { 'field': 'angle', 'type': 'quantitative' },
-            'tooltip': [
-              { 'field': 'City',     'type': 'nominal',      'title': 'City' },
-              { 'field': 'Season',   'type': 'nominal',      'title': 'Season' },
-              { 'field': 'Rainfall', 'type': 'quantitative', 'title': 'Avg Daily Rainfall (mm)', 'format': '.2f' }
-            ]
-          }
+      'height': 320,
+      'data': { 'url': 'seasonal_rainfall.csv' },
+      'transform': [{ 'filter': filterExpr }],
+      'mark': { 'type': 'bar', 'cornerRadiusEnd': 3 },
+      'encoding': {
+        'x': {
+          'field': 'Season', 'type': 'nominal',
+          'sort': ['Summer', 'Autumn', 'Winter', 'Spring'],
+          'title': null,
+          'axis': { 'labelFontSize': 12, 'labelFontWeight': 600 }
         },
-        {
-          'data': { 'url': 'radar_rainfall.csv' },
-          'transform': [{ 'filter': filterExpr }],
-          'mark': { 'type': 'point', 'filled': true, 'size': 50 },
-          'encoding': {
-            'x': { 'field': 'px', 'type': 'quantitative' },
-            'y': { 'field': 'py', 'type': 'quantitative' },
-            'color': {
-              'field': 'City', 'type': 'nominal', 'legend': null,
-              'scale': { 'domain': domain, 'range': range }
-            },
-            'tooltip': [
-              { 'field': 'City',     'type': 'nominal',      'title': 'City' },
-              { 'field': 'Season',   'type': 'nominal',      'title': 'Season' },
-              { 'field': 'Rainfall', 'type': 'quantitative', 'title': 'Avg Daily Rainfall (mm)', 'format': '.2f' }
-            ]
-          }
+        'xOffset': { 'field': 'City', 'type': 'nominal' },
+        'y': {
+          'field': 'Rainfall', 'type': 'quantitative',
+          'title': 'Average Daily Rainfall (mm)',
+          'axis': { 'labelExpr': "datum.value + ' mm'" }
         },
-        {
-          'data': { 'values': radarLabels },
-          'mark': { 'type': 'text', 'fontSize': 12, 'fontWeight': 600, 'color': '#1e293b' },
-          'encoding': {
-            'x': { 'field': 'lx', 'type': 'quantitative' },
-            'y': { 'field': 'ly', 'type': 'quantitative' },
-            'text': { 'field': 'label', 'type': 'nominal' }
-          }
-        }
-      ],
+        'color': {
+          'field': 'City', 'type': 'nominal',
+          'legend': null,
+          'scale': { 'domain': domain, 'range': range }
+        },
+        'tooltip': [
+          { 'field': 'City',     'type': 'nominal',      'title': 'City' },
+          { 'field': 'Season',   'type': 'nominal',      'title': 'Season' },
+          { 'field': 'Rainfall', 'type': 'quantitative', 'title': 'Avg Daily Rainfall (mm)', 'format': '.2f' }
+        ]
+      },
       'config': { 'view': { 'stroke': null } }
     };
   }
