@@ -784,7 +784,7 @@ document.addEventListener('DOMContentLoaded', async function () {
         'mark': { 'type': 'rule', 'color': '#e2e8f0', 'strokeWidth': 6, 'strokeCap': 'round' },
         'encoding': {
           'y': { 'field': 'City', 'type': 'nominal', 'sort': { 'field': 'Median', 'order': 'descending' }, 'title': null, 'axis': { 'labelFontSize': 11 } },
-          'x': { 'field': 'Min', 'type': 'quantitative', 'title': 'Temperature (C)', 'axis': { 'labelExpr': "datum.value + 'C'" } },
+          'x': { 'field': 'Min', 'type': 'quantitative', 'title': 'Temperature (C)', 'scale': { 'domain': [0, 42] }, 'axis': { 'labelExpr': "datum.value + 'C'" } },
           'x2': { 'field': 'Max' },
           'tooltip': [
             { 'field': 'City',   'type': 'nominal',      'title': 'City' },
@@ -800,7 +800,7 @@ document.addEventListener('DOMContentLoaded', async function () {
         'mark': { 'type': 'bar', 'height': 10, 'cornerRadiusEnd': 3 },
         'encoding': {
           'y': { 'field': 'City', 'type': 'nominal', 'sort': { 'field': 'Median', 'order': 'descending' } },
-          'x': { 'field': 'Q1', 'type': 'quantitative' },
+          'x': { 'field': 'Q1', 'type': 'quantitative', 'scale': { 'domain': [0, 42] } },
           'x2': { 'field': 'Q3' },
           'color': {
             'field': 'City', 'type': 'nominal',
@@ -821,7 +821,7 @@ document.addEventListener('DOMContentLoaded', async function () {
         'mark': { 'type': 'tick', 'color': 'white', 'thickness': 2.5, 'height': 14 },
         'encoding': {
           'y': { 'field': 'City', 'type': 'nominal', 'sort': { 'field': 'Median', 'order': 'descending' } },
-          'x': { 'field': 'Median', 'type': 'quantitative' },
+          'x': { 'field': 'Median', 'type': 'quantitative', 'scale': { 'domain': [0, 42] } },
           'tooltip': [
             { 'field': 'City',   'type': 'nominal',      'title': 'City' },
             { 'field': 'Median', 'type': 'quantitative', 'title': 'Median (C)',  'format': '.1f' }
@@ -832,7 +832,7 @@ document.addEventListener('DOMContentLoaded', async function () {
         'mark': { 'type': 'text', 'align': 'left', 'dx': 5, 'fontSize': 10, 'fontWeight': 500, 'color': '#475569' },
         'encoding': {
           'y': { 'field': 'City', 'type': 'nominal', 'sort': { 'field': 'Median', 'order': 'descending' } },
-          'x': { 'field': 'Max', 'type': 'quantitative' },
+          'x': { 'field': 'Max', 'type': 'quantitative', 'scale': { 'domain': [0, 42] } },
           'text': { 'field': 'Range', 'type': 'nominal' }
         }
       }
@@ -841,10 +841,8 @@ document.addEventListener('DOMContentLoaded', async function () {
   };
   await embedChart('vis11', spec11);
 
-  /* CHART 12 - Seasonal Rainfall Trends (radar chart) */
+  /* CHART 12 - Seasonal Rainfall Trends (radar using manual x/y trig) */
   var activeCities12 = ['Sydney'];
-
-  var seasonAngles = { 'Summer': 0, 'Autumn': 90, 'Winter': 180, 'Spring': 270 };
 
   function makeSpec12(cities) {
     var filterExpr = cities.map(function(c) { return 'datum.City === "' + c + '"'; }).join(' || ');
@@ -859,45 +857,72 @@ document.addEventListener('DOMContentLoaded', async function () {
       'transform': [
         { 'filter': filterExpr },
         {
-          'calculate': 'datum.Season === "Summer" ? 0 : datum.Season === "Autumn" ? 1 : datum.Season === "Winter" ? 2 : 3',
-          'as': 'SeasonOrder'
-        }
+          'calculate': 'datum.Season === "Summer" ? -90 : datum.Season === "Autumn" ? 0 : datum.Season === "Winter" ? 90 : 180',
+          'as': 'angleDeg'
+        },
+        { 'calculate': 'datum.angleDeg * PI / 180', 'as': 'angleRad' },
+        { 'calculate': 'datum.Rainfall * cos(datum.angleRad)', 'as': 'px' },
+        { 'calculate': 'datum.Rainfall * sin(datum.angleRad)', 'as': 'py' }
       ],
       'layer': [
         {
-          'mark': {
-            'type': 'line',
-            'point': { 'filled': true, 'size': 60 },
-            'strokeWidth': 2,
-            'interpolate': 'linear-closed',
-            'fillOpacity': 0.1
-          },
+          'mark': { 'type': 'line', 'strokeWidth': 2, 'fillOpacity': 0.1 },
           'encoding': {
-            'theta': {
-              'field': 'SeasonOrder',
-              'type': 'quantitative',
-              'scale': { 'domain': [0, 4] }
-            },
-            'radius': {
-              'field': 'Rainfall',
-              'type': 'quantitative',
-              'scale': { 'type': 'sqrt', 'zero': true }
-            },
+            'x': { 'field': 'px', 'type': 'quantitative', 'title': null, 'axis': null, 'scale': { 'nice': false } },
+            'y': { 'field': 'py', 'type': 'quantitative', 'title': null, 'axis': null, 'scale': { 'nice': false } },
             'color': {
               'field': 'City', 'type': 'nominal',
               'legend': null,
               'scale': { 'domain': domain, 'range': range }
             },
-            'order': { 'field': 'SeasonOrder', 'type': 'quantitative' },
+            'fill': {
+              'field': 'City', 'type': 'nominal',
+              'scale': { 'domain': domain, 'range': range },
+              'legend': null
+            },
+            'order': { 'field': 'angleDeg', 'type': 'quantitative' },
             'tooltip': [
               { 'field': 'City',     'type': 'nominal',      'title': 'City' },
               { 'field': 'Season',   'type': 'nominal',      'title': 'Season' },
               { 'field': 'Rainfall', 'type': 'quantitative', 'title': 'Avg Daily Rainfall (mm)', 'format': '.2f' }
             ]
           }
+        },
+        {
+          'mark': { 'type': 'point', 'filled': true, 'size': 50 },
+          'encoding': {
+            'x': { 'field': 'px', 'type': 'quantitative' },
+            'y': { 'field': 'py', 'type': 'quantitative' },
+            'color': {
+              'field': 'City', 'type': 'nominal',
+              'legend': null,
+              'scale': { 'domain': domain, 'range': range }
+            },
+            'tooltip': [
+              { 'field': 'City',     'type': 'nominal',      'title': 'City' },
+              { 'field': 'Season',   'type': 'nominal',      'title': 'Season' },
+              { 'field': 'Rainfall', 'type': 'quantitative', 'title': 'Avg Daily Rainfall (mm)', 'format': '.2f' }
+            ]
+          }
+        },
+        {
+          'data': {
+            'values': [
+              { 'label': 'Summer', 'lx':  0,    'ly': -1.2 },
+              { 'label': 'Autumn', 'lx':  1.3,  'ly':  0   },
+              { 'label': 'Winter', 'lx':  0,    'ly':  1.3 },
+              { 'label': 'Spring', 'lx': -1.3,  'ly':  0   }
+            ]
+          },
+          'mark': { 'type': 'text', 'fontSize': 12, 'fontWeight': 600, 'color': '#1e293b' },
+          'encoding': {
+            'x': { 'field': 'lx', 'type': 'quantitative' },
+            'y': { 'field': 'ly', 'type': 'quantitative' },
+            'text': { 'field': 'label', 'type': 'nominal' }
+          }
         }
       ],
-      'view': { 'stroke': null }
+      'config': { 'view': { 'stroke': null } }
     };
   }
 
