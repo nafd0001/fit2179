@@ -777,15 +777,25 @@ document.addEventListener('DOMContentLoaded', async function () {
   var spec11 = {
     '$schema': 'https://vega.github.io/schema/vega-lite/v5.json',
     'width': 'container',
-    'height': 420,
+    'height': 440,
     'data': { 'url': 'temp_distribution.csv' },
     'layer': [
       {
-        'mark': { 'type': 'rule', 'color': '#e8ecf0', 'strokeWidth': 8, 'strokeCap': 'butt' },
+        'mark': { 'type': 'rule', 'color': '#dde3ea', 'strokeWidth': 8, 'strokeCap': 'round' },
         'encoding': {
-          'y': { 'field': 'City', 'type': 'nominal', 'sort': { 'field': 'Median', 'order': 'descending' }, 'title': null, 'axis': { 'labelFontSize': 11 } },
-          'x': { 'value': 0 },
-          'x2': { 'value': 100000 },
+          'y': {
+            'field': 'City', 'type': 'nominal',
+            'sort': { 'field': 'Median', 'order': 'descending' },
+            'title': null,
+            'axis': { 'labelFontSize': 11, 'labelColor': '#475569' }
+          },
+          'x': {
+            'field': 'Min', 'type': 'quantitative',
+            'title': null,
+            'axis': null,
+            'scale': { 'domain': [0, 48] }
+          },
+          'x2': { 'field': 'Max' },
           'tooltip': [
             { 'field': 'City',   'type': 'nominal',      'title': 'City' },
             { 'field': 'Min',    'type': 'quantitative', 'title': 'Min (C)',    'format': '.1f' },
@@ -797,16 +807,17 @@ document.addEventListener('DOMContentLoaded', async function () {
         }
       },
       {
-        'mark': { 'type': 'bar', 'height': 10, 'cornerRadiusEnd': 3 },
+        'mark': { 'type': 'bar', 'height': 10, 'cornerRadiusEnd': 4, 'cornerRadiusStart': 4 },
         'encoding': {
           'y': { 'field': 'City', 'type': 'nominal', 'sort': { 'field': 'Median', 'order': 'descending' } },
-          'x': { 'field': 'Q1', 'type': 'quantitative', 'title': 'Temperature (C)', 'axis': { 'labelExpr': "datum.value + 'C'" } },
+          'x': { 'field': 'Q1', 'type': 'quantitative', 'scale': { 'domain': [0, 48] } },
           'x2': { 'field': 'Q3' },
           'color': {
             'field': 'City', 'type': 'nominal',
             'scale': { 'domain': cityList, 'range': cityList.map(function(c) { return cityColors[c]; }) },
             'legend': null
           },
+          'opacity': { 'value': 0.85 },
           'tooltip': [
             { 'field': 'City',   'type': 'nominal',      'title': 'City' },
             { 'field': 'Min',    'type': 'quantitative', 'title': 'Min (C)',    'format': '.1f' },
@@ -818,21 +829,17 @@ document.addEventListener('DOMContentLoaded', async function () {
         }
       },
       {
-        'mark': { 'type': 'tick', 'color': 'white', 'thickness': 2.5, 'height': 14 },
+        'mark': { 'type': 'tick', 'color': 'white', 'thickness': 2, 'height': 14 },
         'encoding': {
           'y': { 'field': 'City', 'type': 'nominal', 'sort': { 'field': 'Median', 'order': 'descending' } },
-          'x': { 'field': 'Median', 'type': 'quantitative' },
-          'tooltip': [
-            { 'field': 'City',   'type': 'nominal',      'title': 'City' },
-            { 'field': 'Median', 'type': 'quantitative', 'title': 'Median (C)', 'format': '.1f' }
-          ]
+          'x': { 'field': 'Median', 'type': 'quantitative', 'scale': { 'domain': [0, 48] } }
         }
       },
       {
-        'mark': { 'type': 'text', 'align': 'right', 'dx': -8, 'fontSize': 10, 'fontWeight': 500, 'color': '#475569' },
+        'mark': { 'type': 'text', 'align': 'left', 'dx': 6, 'fontSize': 10, 'fontWeight': 500, 'color': '#64748b' },
         'encoding': {
           'y': { 'field': 'City', 'type': 'nominal', 'sort': { 'field': 'Median', 'order': 'descending' } },
-          'x': { 'value': 0 },
+          'x': { 'field': 'Max', 'type': 'quantitative', 'scale': { 'domain': [0, 48] } },
           'text': { 'field': 'Range', 'type': 'nominal' }
         }
       }
@@ -841,7 +848,7 @@ document.addEventListener('DOMContentLoaded', async function () {
   };
   await embedChart('vis11', spec11);
 
-  /* CHART 12 - Seasonal Rainfall Trends (grouped bar chart) */
+  /* CHART 12 - Seasonal Rainfall Trends (stacked column chart) */
   var activeCities12 = ['Sydney'];
 
   function makeSpec12(cities) {
@@ -860,12 +867,12 @@ document.addEventListener('DOMContentLoaded', async function () {
           'field': 'Season', 'type': 'nominal',
           'sort': ['Summer', 'Autumn', 'Winter', 'Spring'],
           'title': null,
-          'axis': { 'labelFontSize': 12, 'labelFontWeight': 600 }
+          'axis': { 'labelFontSize': 13, 'labelFontWeight': 600, 'labelAngle': 0 }
         },
-        'xOffset': { 'field': 'City', 'type': 'nominal' },
         'y': {
           'field': 'Rainfall', 'type': 'quantitative',
           'title': 'Average Daily Rainfall (mm)',
+          'stack': 'zero',
           'axis': { 'labelExpr': "datum.value + ' mm'" }
         },
         'color': {
@@ -873,6 +880,7 @@ document.addEventListener('DOMContentLoaded', async function () {
           'legend': null,
           'scale': { 'domain': domain, 'range': range }
         },
+        'order': { 'field': 'City', 'type': 'nominal' },
         'tooltip': [
           { 'field': 'City',     'type': 'nominal',      'title': 'City' },
           { 'field': 'Season',   'type': 'nominal',      'title': 'Season' },
