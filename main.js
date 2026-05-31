@@ -841,39 +841,54 @@ document.addEventListener('DOMContentLoaded', async function () {
   };
   await embedChart('vis11', spec11);
 
-  /* CHART 12 - Seasonal Rainfall Trends */
+  /* CHART 12 - Seasonal Rainfall Trends (radar chart) */
   var activeCities12 = ['Sydney'];
+
+  var seasonAngles = { 'Summer': 0, 'Autumn': 90, 'Winter': 180, 'Spring': 270 };
 
   function makeSpec12(cities) {
     var filterExpr = cities.map(function(c) { return 'datum.City === "' + c + '"'; }).join(' || ');
     var domain = cities;
     var range  = cities.map(function(c) { return cityColors[c]; });
+
     return {
       '$schema': 'https://vega.github.io/schema/vega-lite/v5.json',
       'width': 'container',
-      'height': 300,
+      'height': 340,
       'data': { 'url': 'seasonal_rainfall.csv' },
-      'transform': [{ 'filter': filterExpr }],
+      'transform': [
+        { 'filter': filterExpr },
+        {
+          'calculate': 'datum.Season === "Summer" ? 0 : datum.Season === "Autumn" ? 1 : datum.Season === "Winter" ? 2 : 3',
+          'as': 'SeasonOrder'
+        }
+      ],
       'layer': [
         {
-          'mark': { 'type': 'line', 'point': { 'filled': true, 'size': 60 }, 'strokeWidth': 2.5 },
+          'mark': {
+            'type': 'line',
+            'point': { 'filled': true, 'size': 60 },
+            'strokeWidth': 2,
+            'interpolate': 'linear-closed',
+            'fillOpacity': 0.1
+          },
           'encoding': {
-            'x': {
-              'field': 'Season', 'type': 'nominal',
-              'sort': ['Summer','Autumn','Winter','Spring'],
-              'title': null,
-              'axis': { 'labelFontSize': 12, 'labelFontWeight': 600 }
+            'theta': {
+              'field': 'SeasonOrder',
+              'type': 'quantitative',
+              'scale': { 'domain': [0, 4] }
             },
-            'y': {
-              'field': 'Rainfall', 'type': 'quantitative',
-              'title': 'Average Daily Rainfall (mm)',
-              'axis': { 'labelExpr': "datum.value + ' mm'" }
+            'radius': {
+              'field': 'Rainfall',
+              'type': 'quantitative',
+              'scale': { 'type': 'sqrt', 'zero': true }
             },
             'color': {
               'field': 'City', 'type': 'nominal',
               'legend': null,
               'scale': { 'domain': domain, 'range': range }
             },
+            'order': { 'field': 'SeasonOrder', 'type': 'quantitative' },
             'tooltip': [
               { 'field': 'City',     'type': 'nominal',      'title': 'City' },
               { 'field': 'Season',   'type': 'nominal',      'title': 'Season' },
@@ -882,7 +897,7 @@ document.addEventListener('DOMContentLoaded', async function () {
           }
         }
       ],
-      'config': { 'view': { 'stroke': null } }
+      'view': { 'stroke': null }
     };
   }
 
